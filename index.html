@@ -67,9 +67,12 @@ li.active { font-weight: bold; color: #8b4c19; }
     <button id="next">Successiva ⏭</button>
   </div>
 
-  <h3>La mia playlist</h3>
-  <ol id="playlist"></ol>
-  <p class="note">Seleziona un brano dall'elenco per ascoltarlo.</p>
+<h3>Tutti i brani</h3>
+<ol id="playlist"></ol>
+<p class="note">Premi “Aggiungi” per inserire un brano nella tua playlist personale.</p>
+
+<h3>La mia playlist personale</h3>
+<ol id="miaPlaylist"></ol>
 </div>
 
 <script>
@@ -78,6 +81,14 @@ const audio = document.getElementById("audio");
 const elenco = document.getElementById("playlist");
 const nome = document.getElementById("now");
 let corrente = 0;
+  let miaPlaylist = [];
+
+try {
+  miaPlaylist = JSON.parse(localStorage.getItem("miaPlaylist") || "[]");
+} catch (errore) {
+  miaPlaylist = [];
+}
+  const elencoMia = document.getElementById("miaPlaylist");
 async function caricaBrani() {
   try {
     const risposta = await fetch(
@@ -117,13 +128,103 @@ async function caricaBrani() {
 }
 function mostraPlaylist() {
   elenco.innerHTML = "";
+
   brani.forEach((brano, indice) => {
     const voce = document.createElement("li");
-    voce.textContent = brano.titolo;
-    voce.onclick = () => riproduci(indice);
+
+    const titolo = document.createElement("span");
+    titolo.textContent = brano.titolo;
+    titolo.onclick = () => riproduci(indice);
+    voce.appendChild(titolo);
+
+    const aggiungi = document.createElement("button");
+    aggiungi.textContent = "＋ Aggiungi";
+    aggiungi.onclick = () => aggiungiAllaMiaPlaylist(brano.file);
+    voce.appendChild(aggiungi);
+
     elenco.appendChild(voce);
   });
+
+  mostraMiaPlaylist();
 }
+
+function salvaMiaPlaylist() {
+  localStorage.setItem("miaPlaylist", JSON.stringify(miaPlaylist));
+}
+
+function aggiungiAllaMiaPlaylist(file) {
+  if (miaPlaylist.includes(file)) {
+    nome.textContent = "Il brano è già nella tua playlist";
+    return;
+  }
+
+  miaPlaylist.push(file);
+  salvaMiaPlaylist();
+  mostraMiaPlaylist();
+  nome.textContent = "Brano aggiunto alla tua playlist";
+}
+
+function mostraMiaPlaylist() {
+  elencoMia.innerHTML = "";
+
+  miaPlaylist = miaPlaylist.filter(file =>
+    brani.some(brano => brano.file === file)
+  );
+
+  miaPlaylist.forEach((file, indice) => {
+    const brano = brani.find(elemento => elemento.file === file);
+    if (!brano) return;
+
+    const voce = document.createElement("li");
+
+    const titolo = document.createElement("span");
+    titolo.textContent = brano.titolo;
+    titolo.onclick = () =>
+      riproduci(brani.findIndex(elemento => elemento.file === file));
+    voce.appendChild(titolo);
+
+    const su = document.createElement("button");
+    su.textContent = "↑";
+    su.disabled = indice === 0;
+    su.onclick = () => spostaBrano(indice, -1);
+    voce.appendChild(su);
+
+    const giu = document.createElement("button");
+    giu.textContent = "↓";
+    giu.disabled = indice === miaPlaylist.length - 1;
+    giu.onclick = () => spostaBrano(indice, 1);
+    voce.appendChild(giu);
+
+    const rimuovi = document.createElement("button");
+    rimuovi.textContent = "Rimuovi";
+    rimuovi.onclick = () => rimuoviDallaMiaPlaylist(indice);
+    voce.appendChild(rimuovi);
+
+    elencoMia.appendChild(voce);
+  });
+
+  salvaMiaPlaylist();
+}
+
+function spostaBrano(indice, direzione) {
+  const nuovoIndice = indice + direzione;
+
+  if (nuovoIndice < 0 || nuovoIndice >= miaPlaylist.length) return;
+
+  [miaPlaylist[indice], miaPlaylist[nuovoIndice]] =
+    [miaPlaylist[nuovoIndice], miaPlaylist[indice]];
+
+  salvaMiaPlaylist();
+  mostraMiaPlaylist();
+}
+
+function rimuoviDallaMiaPlaylist(indice) {
+  miaPlaylist.splice(indice, 1);
+  salvaMiaPlaylist();
+  mostraMiaPlaylist();
+}
+
+
 
 function riproduci(indice) {
     if (brani.length === 0) {
