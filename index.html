@@ -73,16 +73,48 @@ li.active { font-weight: bold; color: #8b4c19; }
 </div>
 
 <script>
-const brani = [
-  { titolo: "La cura", file: "La cura.mp3" },
-  { titolo: "04 Corner Of The Earth", file: "04 Corner Of The Earth.mp3" },
-  { titolo: "Man in the Mirror", file: "Man in the Mirror.mp3" }
-];
+let brani = [];
 const audio = document.getElementById("audio");
 const elenco = document.getElementById("playlist");
 const nome = document.getElementById("now");
 let corrente = 0;
+async function caricaBrani() {
+  try {
+    const risposta = await fetch(
+      "https://api.github.com/repos/gozzimarco0508-hub/stanza-musica/contents/"
+    );
 
+    if (!risposta.ok) {
+      throw new Error("Errore nel caricamento");
+    }
+
+    const files = await risposta.json();
+
+    brani = files
+      .filter(file =>
+        file.type === "file" &&
+        file.name.toLowerCase().endsWith(".mp3")
+      )
+      .sort((a, b) =>
+        a.name.localeCompare(b.name, "it", {
+          numeric: true,
+          sensitivity: "base"
+        })
+      )
+      .map(file => ({
+        titolo: file.name.replace(/\.mp3$/i, ""),
+        file: file.name
+      }));
+
+    mostraPlaylist();
+
+    if (brani.length === 0) {
+      nome.textContent = "Nessun brano MP3 trovato";
+    }
+  } catch (errore) {
+    nome.textContent = "Impossibile caricare la playlist";
+  }
+}
 function mostraPlaylist() {
   elenco.innerHTML = "";
   brani.forEach((brano, indice) => {
@@ -94,6 +126,10 @@ function mostraPlaylist() {
 }
 
 function riproduci(indice) {
+    if (brani.length === 0) {
+    nome.textContent = "Nessun brano disponibile";
+    return;
+  }
   corrente = (indice + brani.length) % brani.length;
   audio.src = brani[corrente].file;
   nome.textContent = brani[corrente].titolo;
@@ -116,7 +152,7 @@ audio.addEventListener("ended", () => {
   riproduci(corrente + 1);
 });
 
-mostraPlaylist();
+caricaBrani();
 </script>
 </body>
 </html>
