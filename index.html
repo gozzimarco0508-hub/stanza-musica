@@ -40,7 +40,7 @@ button, input {
   margin: 0 auto;
 }
 
-/* CORNICE ESTERNA DEL LETTORE */
+/* CORNICE ESTERNA */
 
 .outer-frame {
   position: relative;
@@ -124,10 +124,14 @@ button, input {
   text-align: center;
 }
 
-.artwork svg {
+/* NUOVA IMMAGINE DEL CENTAURO */
+
+.centaur-image {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
+  object-fit: contain;
   filter: drop-shadow(0 0 14px #d8b66c18);
 }
 
@@ -410,106 +414,12 @@ footer {
       <main class="main-layout">
 
         <section class="artwork" aria-label="Emblema del centauro">
-          <svg viewBox="0 0 420 440" xmlns="http://www.w3.org/2000/svg"
-               role="img" aria-label="Centauro dorato con arco">
 
-            <defs>
-              <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#fff0b2"/>
-                <stop offset="35%" stop-color="#d8b66c"/>
-                <stop offset="65%" stop-color="#9e7737"/>
-                <stop offset="100%" stop-color="#f3d992"/>
-              </linearGradient>
-              <radialGradient id="halo">
-                <stop offset="0%" stop-color="#b58a3b" stop-opacity=".16"/>
-                <stop offset="100%" stop-color="#b58a3b" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-
-            <circle cx="210" cy="202" r="174" fill="url(#halo)"/>
-            <circle cx="210" cy="202" r="158" fill="none"
-                    stroke="url(#gold)" stroke-width="1.5"/>
-            <circle cx="210" cy="202" r="148" fill="none"
-                    stroke="#9b783c" stroke-width=".7" stroke-dasharray="2 7"/>
-
-            {#each Array.from({length:36}, (_,i)=>i) as i}
-              <line
-                x1={210 + 163*Math.cos(i*Math.PI/18)}
-                y1={202 + 163*Math.sin(i*Math.PI/18)}
-                x2={210 + (i%3===0?174:168)*Math.cos(i*Math.PI/18)}
-                y2={202 + (i%3===0?174:168)*Math.sin(i*Math.PI/18)}
-                stroke="#d8b66c"
-                stroke-width={i%3===0?1.5:.7}/>
-            {/each}
-
-            <!-- Piccole stelle ornamentali -->
-            <g fill="#e4c57c">
-              <path d="M210 30 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4z"/>
-              <path d="M75 145 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/>
-              <path d="M340 260 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/>
-              <circle cx="111" cy="90" r="2"/>
-              <circle cx="316" cy="104" r="2"/>
-              <circle cx="100" cy="285" r="2"/>
-              <circle cx="315" cy="322" r="2"/>
-            </g>
-
-
-<g fill="#d8b66c" stroke="#fff0b2" stroke-width="3.5"
-   stroke-linecap="round" stroke-linejoin="round">
-
-   stroke-linecap="round" stroke-linejoin="round">
-  <!-- Coda e corpo del cavallo -->
-  <path d="M164 218 Q133 224 117 254 Q105 278 83 288
-           Q101 306 122 284 L155 256"/>
-  <path d="M153 218 Q180 196 215 207
-           Q247 207 267 231 L281 258
-           L269 276 L248 267
-           L233 249 Q208 257 187 253
-           L174 284 L153 284 L160 250
-           Q139 258 130 245 Q127 231 153 218 Z"/>
-  <!-- Zampe -->
-  <path d="M162 251 L143 290 L146 318 L132 322
-           L122 316 L128 289 L139 252"/>
-  <path d="M183 253 L188 287 L177 316 L162 319
-           L155 311 L165 286 L163 256"/>
-  <path d="M249 258 L264 286 L286 302 L278 314
-           L265 311 L243 292 L231 263"/>
-  <path d="M264 249 L289 273 L304 294 L294 305
-           L282 296 L261 273"/>
-  <!-- Torso dell'arciere -->
-  <path d="M180 213 L183 184 L196 158
-           L214 143 L233 150 L244 171
-           L236 193 L249 214 L228 228 L204 217 Z"/>
-  <!-- Braccia e arco -->
-  <path d="M201 164 L226 143 L257 119 L266 126
-           L244 151 L224 174"/>
-  <path d="M232 170 L259 154 L279 132 L288 139
-           L272 163 L244 188"/>
-  <path d="M262 91 Q307 134 264 177"
-        fill="none" stroke-width="4"/>
-  <path d="M262 91 L264 177" fill="none" stroke-width="1.2"/>
-  <path d="M217 135 L300 135"/>
-  <path d="M300 135 L289 129 M300 135 L289 141"
-        fill="none"/>
-  <!-- Testa e capelli -->
-  <path d="M199 143 L194 125 L200 108
-           L215 101 L229 109 L231 124
-           L219 138 Z"/>
-  <path d="M197 125 L190 111 L197 95
-           L208 89 L222 95 L231 108
-           L220 103 L211 110 L208 126 L201 133 Z"/>
-  <!-- Dettagli -->
-  <path d="M174 229 Q201 240 227 228" fill="none"/>
-  <path d="M198 175 L213 188 L206 202" fill="none"/>
-</g>
-
-
-            <path d="M82 360 Q210 379 338 360"
-                  fill="none" stroke="#b58a3b" stroke-width="1"/>
-            <text x="210" y="389" fill="#d8b66c"
-                  font-family="Georgia,serif" font-size="12"
-                  letter-spacing="4" text-anchor="middle">SAGITTARIUS</text>
-          </svg>
+          <img
+            class="centaur-image"
+            src="Senza%20titolo.png"
+            alt="Centauro dorato con arco"
+          >
 
           <div class="signature">
             Mr Gos
@@ -544,6 +454,7 @@ footer {
           </div>
 
           <ol id="playlist"></ol>
+
           <div id="status" aria-live="polite">
             Sto cercando i brani disponibili…
           </div>
@@ -585,6 +496,7 @@ function playSong(index) {
 
   audio.src = song.url;
   now.textContent = song.title;
+
   audio.play().catch(() => {
     status.textContent =
       "Premi Play nel lettore per iniziare l'ascolto.";
