@@ -5,61 +5,276 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>La stanza della musica</title>
+
 <style>
+:root {
+  --oro: #e5c783;
+  --oro-scuro: #a88749;
+  --nero: #0b0b0b;
+  --pannello: #171717;
+  --testo: #f3eee4;
+  --secondario: #c4bba9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  padding: 16px;
-  background: #f1e8da;
+  padding: 20px 14px;
+  background: var(--nero);
+  color: var(--testo);
   font-family: Arial, sans-serif;
-  color: #352719;
 }
+
 .player {
-  max-width: 480px;
-  margin: auto;
-  padding: 22px;
-  background: #fffaf2;
-  border-radius: 18px;
-  box-shadow: 0 4px 16px #0002;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 26px;
+  background: var(--pannello);
+  border: 1px solid #493b24;
+  border-radius: 16px;
+  box-shadow: 0 8px 35px #000;
 }
-h2 { text-align: center; margin-top: 0; }
+
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 8px 0 24px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--oro-scuro);
+}
+
+.masthead h1 {
+  margin: 0;
+  color: var(--oro);
+  font-family: Georgia, serif;
+  font-size: clamp(27px, 5vw, 43px);
+  font-weight: normal;
+  line-height: 1.15;
+}
+
 .subtitle {
-  text-align: center;
-  color: #80694f;
-  margin-bottom: 22px;
+  margin-top: 12px;
+  color: var(--secondario);
+  font-size: 16px;
+  letter-spacing: 1px;
 }
-audio { width: 100%; margin: 12px 0; }
+
+.signature-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sagittarius {
+  width: 82px;
+  height: 82px;
+  color: var(--oro);
+}
+
+.signature {
+  color: var(--oro);
+  font-family: cursive;
+  font-size: clamp(21px, 3vw, 30px);
+  font-style: italic;
+  white-space: nowrap;
+  transform: rotate(-7deg);
+}
+
+#now {
+  min-height: 26px;
+  margin: 12px 0;
+  color: var(--oro);
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 19px;
+}
+
+audio {
+  display: block;
+  width: 100%;
+  margin: 18px 0;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 30px;
+}
+
 button {
-  border: 0;
-  border-radius: 8px;
-  padding: 11px 15px;
-  margin: 4px;
-  background: #70543b;
-  color: white;
-  font-size: 15px;
+  padding: 10px 14px;
+  border: 1px solid var(--oro-scuro);
+  border-radius: 7px;
+  background: #282116;
+  color: var(--oro);
+  font-size: 14px;
   cursor: pointer;
 }
-.controls { text-align: center; }
-ol { padding-left: 28px; }
+
+button:hover:not(:disabled) {
+  background: #493b24;
+}
+
+button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+h3 {
+  margin-top: 28px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #493b24;
+  color: var(--oro);
+  font-family: Georgia, serif;
+  font-weight: normal;
+  font-size: 21px;
+}
+
+ol {
+  padding-left: 28px;
+}
+
 li {
   padding: 10px 6px;
-  cursor: pointer;
-  border-bottom: 1px solid #e7dccd;
+  border-bottom: 1px solid #302a20;
+  overflow-wrap: anywhere;
 }
-li:hover { background: #eee1cf; }
-li.active { font-weight: bold; color: #8b4c19; }
+
+li.active {
+  color: var(--oro);
+}
+
+.song-title {
+  cursor: pointer;
+}
+
+.song-title:hover {
+  color: var(--oro);
+  text-decoration: underline;
+}
+
+li button {
+  margin: 5px 3px 0;
+}
+
 .note {
-  font-size: 12px;
-  color: #80694f;
-  text-align: center;
+  color: var(--secondario);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 10px 7px;
+  }
+
+  .player {
+    padding: 15px 12px;
+  }
+
+  .masthead {
+    gap: 7px;
+    padding-bottom: 18px;
+  }
+
+  .masthead h1 {
+    font-size: 27px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  .sagittarius {
+    width: 43px;
+    height: 43px;
+  }
+
+  .signature {
+    font-size: 19px;
+  }
+
+  button {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
 }
 </style>
 </head>
+
 <body>
 <div class="player">
-  <h2>La stanza della musica</h2>
-  <div class="subtitle">Siediti, scegli, ascolta 🎵</div>
+
+  <header class="masthead">
+    <div>
+      <h1>La stanza<br>della musica</h1>
+      <div class="subtitle">Siediti, scegli, ascolta 🎵</div>
+    </div>
+
+    <div class="signature-area">
+
+      <!-- Sagittario stilizzato, disegnato direttamente nel codice -->
+      <svg class="sagittarius"
+           viewBox="0 0 100 100"
+           xmlns="http://www.w3.org/2000/svg"
+           role="img"
+           aria-label="Sagittario, arciere mitologico">
+
+        <g fill="none" stroke="currentColor"
+           stroke-width="2.4"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+
+          <!-- Arco e freccia -->
+          <path d="M58 13 L88 9 L84 39"/>
+          <path d="M88 9 L48 49"/>
+          <path d="M72 25 L87 40"/>
+          <path d="M59 17 Q91 22 84 39"/>
+
+          <!-- Testa e busto dell'arciere -->
+          <circle cx="43" cy="20" r="6"/>
+          <path d="M39 27 L32 42 L46 49 L56 36"/>
+          <path d="M36 31 L23 37 L16 29"/>
+          <path d="M47 30 L61 24"/>
+
+          <!-- Corpo del cavallo -->
+          <path d="M32 42
+                   Q48 38 60 48
+                   L69 43 L76 47
+                   L68 54
+                   Q58 61 42 59
+                   L31 54 Z"/>
+
+          <!-- Zampe -->
+          <path d="M39 57 L35 72 L26 82"/>
+          <path d="M48 59 L52 72 L48 86"/>
+          <path d="M60 55 L68 67 L78 73"/>
+          <path d="M33 47 L22 49 L16 59"/>
+
+          <!-- Coda -->
+          <path d="M42 58 Q34 64 27 60 Q22 57 25 53"/>
+
+          <!-- Arco tenuto dalla mano -->
+          <path d="M17 29 Q7 40 18 50"/>
+          <path d="M17 29 L23 37"/>
+        </g>
+      </svg>
+
+      <span class="signature">Mr Gos</span>
+    </div>
+  </header>
 
   <div id="now">Scegli una canzone</div>
+
   <audio id="audio" controls preload="none"></audio>
 
   <div class="controls">
@@ -67,28 +282,42 @@ li.active { font-weight: bold; color: #8b4c19; }
     <button id="next">Successiva ⏭</button>
   </div>
 
-<h3>Tutti i brani</h3>
-<ol id="playlist"></ol>
-<p class="note">Premi “Aggiungi” per inserire un brano nella tua playlist personale.</p>
+  <h3>Tutti i brani</h3>
+  <ol id="playlist"></ol>
 
-<h3>La mia playlist personale</h3>
-<ol id="miaPlaylist"></ol>
+  <p class="note">
+    Premi sul titolo per ascoltare un brano.
+    Usa “Aggiungi” per inserirlo nella tua playlist personale.
+  </p>
+
+  <h3>La mia playlist personale</h3>
+  <ol id="miaPlaylist"></ol>
+
 </div>
 
 <script>
 let brani = [];
+
 const audio = document.getElementById("audio");
 const elenco = document.getElementById("playlist");
 const nome = document.getElementById("now");
+const elencoMia = document.getElementById("miaPlaylist");
+
 let corrente = 0;
-  let miaPlaylist = [];
+let miaPlaylist = [];
 
 try {
-  miaPlaylist = JSON.parse(localStorage.getItem("miaPlaylist") || "[]");
+  miaPlaylist = JSON.parse(
+    localStorage.getItem("miaPlaylist") || "[]"
+  );
+
+  if (!Array.isArray(miaPlaylist)) {
+    miaPlaylist = [];
+  }
 } catch (errore) {
   miaPlaylist = [];
 }
-  const elencoMia = document.getElementById("miaPlaylist");
+
 async function caricaBrani() {
   try {
     const risposta = await fetch(
@@ -126,6 +355,7 @@ async function caricaBrani() {
     nome.textContent = "Impossibile caricare la playlist";
   }
 }
+
 function mostraPlaylist() {
   elenco.innerHTML = "";
 
@@ -133,15 +363,18 @@ function mostraPlaylist() {
     const voce = document.createElement("li");
 
     const titolo = document.createElement("span");
+    titolo.className = "song-title";
     titolo.textContent = brano.titolo;
     titolo.onclick = () => riproduci(indice);
+
     voce.appendChild(titolo);
 
     const aggiungi = document.createElement("button");
     aggiungi.textContent = "＋ Aggiungi";
-    aggiungi.onclick = () => aggiungiAllaMiaPlaylist(brano.file);
-    voce.appendChild(aggiungi);
+    aggiungi.onclick = () =>
+      aggiungiAllaMiaPlaylist(brano.file);
 
+    voce.appendChild(aggiungi);
     elenco.appendChild(voce);
   });
 
@@ -149,7 +382,10 @@ function mostraPlaylist() {
 }
 
 function salvaMiaPlaylist() {
-  localStorage.setItem("miaPlaylist", JSON.stringify(miaPlaylist));
+  localStorage.setItem(
+    "miaPlaylist",
+    JSON.stringify(miaPlaylist)
+  );
 }
 
 function aggiungiAllaMiaPlaylist(file) {
@@ -172,15 +408,22 @@ function mostraMiaPlaylist() {
   );
 
   miaPlaylist.forEach((file, indice) => {
-    const brano = brani.find(elemento => elemento.file === file);
+    const brano = brani.find(
+      elemento => elemento.file === file
+    );
+
     if (!brano) return;
 
     const voce = document.createElement("li");
 
     const titolo = document.createElement("span");
+    titolo.className = "song-title";
     titolo.textContent = brano.titolo;
     titolo.onclick = () =>
-      riproduci(brani.findIndex(elemento => elemento.file === file));
+      riproduci(
+        brani.findIndex(elemento => elemento.file === file)
+      );
+
     voce.appendChild(titolo);
 
     const su = document.createElement("button");
@@ -197,9 +440,10 @@ function mostraMiaPlaylist() {
 
     const rimuovi = document.createElement("button");
     rimuovi.textContent = "Rimuovi";
-    rimuovi.onclick = () => rimuoviDallaMiaPlaylist(indice);
-    voce.appendChild(rimuovi);
+    rimuovi.onclick = () =>
+      rimuoviDallaMiaPlaylist(indice);
 
+    voce.appendChild(rimuovi);
     elencoMia.appendChild(voce);
   });
 
@@ -209,10 +453,20 @@ function mostraMiaPlaylist() {
 function spostaBrano(indice, direzione) {
   const nuovoIndice = indice + direzione;
 
-  if (nuovoIndice < 0 || nuovoIndice >= miaPlaylist.length) return;
+  if (
+    nuovoIndice < 0 ||
+    nuovoIndice >= miaPlaylist.length
+  ) {
+    return;
+  }
 
-  [miaPlaylist[indice], miaPlaylist[nuovoIndice]] =
-    [miaPlaylist[nuovoIndice], miaPlaylist[indice]];
+  [
+    miaPlaylist[indice],
+    miaPlaylist[nuovoIndice]
+  ] = [
+    miaPlaylist[nuovoIndice],
+    miaPlaylist[indice]
+  ];
 
   salvaMiaPlaylist();
   mostraMiaPlaylist();
@@ -224,28 +478,31 @@ function rimuoviDallaMiaPlaylist(indice) {
   mostraMiaPlaylist();
 }
 
-
-
 function riproduci(indice) {
-    if (brani.length === 0) {
+  if (brani.length === 0) {
     nome.textContent = "Nessun brano disponibile";
     return;
   }
+
   corrente = (indice + brani.length) % brani.length;
+
   audio.src = brani[corrente].file;
   nome.textContent = brani[corrente].titolo;
+
   [...elenco.children].forEach((voce, i) => {
     voce.classList.toggle("active", i === corrente);
   });
+
   audio.play().catch(() => {
     nome.textContent =
       brani[corrente].titolo +
-      " — aggiungeremo il file MP3 in seguito";
+      " — premi Play per ascoltare";
   });
 }
 
 document.getElementById("prev").onclick =
   () => riproduci(corrente - 1);
+
 document.getElementById("next").onclick =
   () => riproduci(corrente + 1);
 
@@ -257,3 +514,4 @@ caricaBrani();
 </script>
 </body>
 </html>
+
