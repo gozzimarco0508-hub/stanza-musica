@@ -3,17 +3,17 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>La stanza della musica</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La stanza della musica — Mr Gos</title>
 
 <style>
 :root {
-  --oro: #e5c783;
-  --oro-scuro: #a88749;
-  --nero: #0b0b0b;
-  --pannello: #171717;
-  --testo: #f3eee4;
-  --secondario: #c4bba9;
+  --oro: #d8b66c;
+  --oro-chiaro: #f5dfa0;
+  --nero: #090909;
+  --pannello: #12110f;
+  --testo: #eee5d1;
+  --secondario: #a99c82;
 }
 
 * {
@@ -22,318 +22,643 @@
 
 body {
   margin: 0;
-  padding: 20px 14px;
-  background: var(--nero);
+  padding: 24px;
+  min-height: 100vh;
   color: var(--testo);
-  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at top, #30271a 0%, #12110f 45%, #050505 100%);
+  font-family: Georgia, "Times New Roman", serif;
 }
 
-.player {
-  max-width: 850px;
+button, input {
+  font: inherit;
+}
+
+.page {
+  width: 100%;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 26px;
-  background: var(--pannello);
-  border: 1px solid #493b24;
-  border-radius: 16px;
-  box-shadow: 0 8px 35px #000;
 }
 
-.masthead {
-  display: flex;
+/* CORNICE ESTERNA DEL LETTORE */
+
+.outer-frame {
+  position: relative;
+  padding: 15px;
+  border: 2px solid var(--oro);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #191712, #050505 65%, #17130b);
+  box-shadow:
+    0 0 0 5px #0a0907,
+    0 0 0 7px #8b6b35,
+    0 0 35px #000,
+    0 0 35px #9a772b24;
+}
+
+.inner-frame {
+  position: relative;
+  padding: clamp(20px, 4vw, 48px);
+  border: 1px solid #9d7c3d;
+  background:
+    radial-gradient(ellipse at 15% 20%, #392c171c, transparent 50%),
+    linear-gradient(135deg, #11100d, #080808 70%);
+  overflow: hidden;
+}
+
+/* DECORI AGLI ANGOLI */
+
+.corner {
+  position: absolute;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+  opacity: .9;
+}
+
+.corner::before,
+.corner::after {
+  content: "";
+  position: absolute;
+  background: var(--oro);
+}
+
+.corner::before {
+  width: 100%;
+  height: 1px;
+}
+
+.corner::after {
+  width: 1px;
+  height: 100%;
+}
+
+.corner.tl { top: 8px; left: 8px; }
+.corner.tr { top: 8px; right: 8px; transform: rotate(90deg); }
+.corner.bl { bottom: 8px; left: 8px; transform: rotate(-90deg); }
+.corner.br { bottom: 8px; right: 8px; transform: rotate(180deg); }
+
+.corner span {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--oro);
+  transform: rotate(45deg);
+}
+
+/* STRUTTURA PRINCIPALE */
+
+.main-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, .82fr) minmax(0, 1.35fr);
+  gap: clamp(28px, 5vw, 65px);
   align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 8px 0 24px;
-  margin-bottom: 25px;
-  border-bottom: 1px solid var(--oro-scuro);
 }
 
-.masthead h1 {
-  margin: 0;
-  color: var(--oro);
-  font-family: Georgia, serif;
-  font-size: clamp(27px, 5vw, 43px);
-  font-weight: normal;
-  line-height: 1.15;
+.artwork {
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.subtitle {
-  margin-top: 12px;
-  color: var(--secondario);
-  font-size: 16px;
-  letter-spacing: 1px;
-}
-
-.signature-area {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.sagittarius {
-  width: 82px;
-  height: 82px;
-  color: var(--oro);
+.artwork svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 14px #d8b66c18);
 }
 
 .signature {
+  margin-top: 4px;
   color: var(--oro);
-  font-family: cursive;
-  font-size: clamp(21px, 3vw, 30px);
+  font-size: 21px;
   font-style: italic;
-  white-space: nowrap;
-  transform: rotate(-7deg);
+  letter-spacing: 3px;
+}
+
+.signature small {
+  display: block;
+  margin-top: 6px;
+  color: #8f7950;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.music-area {
+  min-width: 0;
+}
+
+.eyebrow {
+  color: var(--oro);
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 12px 0 8px;
+  color: var(--oro-chiaro);
+  font-size: clamp(36px, 5vw, 61px);
+  line-height: 1.02;
+  font-weight: normal;
+  text-shadow: 0 2px 18px #c49b4c24;
+}
+
+.subtitle {
+  margin: 0 0 25px;
+  color: #c6b99f;
+  font-size: clamp(16px, 2vw, 20px);
+  font-style: italic;
+}
+
+.gold-rule {
+  height: 1px;
+  margin: 22px 0;
+  background: linear-gradient(90deg, transparent, var(--oro), transparent);
+}
+
+/* LETTORE AUDIO */
+
+.player {
+  padding: 20px;
+  border: 1px solid #6e562d;
+  border-radius: 5px;
+  background: linear-gradient(145deg, #191712, #0a0a09);
+}
+
+.now-label {
+  color: var(--oro);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
 }
 
 #now {
-  min-height: 26px;
-  margin: 12px 0;
-  color: var(--oro);
-  text-align: center;
-  font-family: Georgia, serif;
-  font-size: 19px;
+  min-height: 28px;
+  margin: 8px 0 14px;
+  color: #f4e5bd;
+  font-size: 18px;
+  overflow-wrap: anywhere;
 }
 
 audio {
   display: block;
   width: 100%;
-  margin: 18px 0;
+  height: 42px;
+  margin-bottom: 14px;
+  accent-color: var(--oro);
 }
 
-.controls {
+.player-note {
+  margin: 0;
+  color: var(--secondario);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ELENCO DEI BRANI */
+
+.playlist-heading {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 18px 0 30px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 12px;
 }
 
-button {
-  padding: 10px 14px;
-  border: 1px solid var(--oro-scuro);
-  border-radius: 7px;
-  background: #282116;
-  color: var(--oro);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-button:hover:not(:disabled) {
-  background: #493b24;
-}
-
-button:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
-h3 {
-  margin-top: 28px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #493b24;
-  color: var(--oro);
-  font-family: Georgia, serif;
+.playlist-heading h2 {
+  margin: 0;
+  color: var(--oro-chiaro);
+  font-size: 20px;
   font-weight: normal;
-  font-size: 21px;
 }
 
-ol {
-  padding-left: 28px;
+#count {
+  color: var(--secondario);
+  font-size: 12px;
 }
 
-li {
-  padding: 10px 6px;
-  border-bottom: 1px solid #302a20;
-  overflow-wrap: anywhere;
+#playlist {
+  display: grid;
+  gap: 7px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-li.active {
+#playlist li {
+  min-width: 0;
+}
+
+.song-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #332b1d;
+  border-radius: 4px;
+  color: var(--testo);
+  background: #100f0c;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+
+.song-button:hover,
+.song-button.active {
+  border-color: var(--oro);
+  background: #282114;
+}
+
+.song-number {
+  flex: 0 0 25px;
   color: var(--oro);
+  text-align: center;
 }
 
 .song-title {
-  cursor: pointer;
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+  font-size: 14px;
 }
 
-.song-title:hover {
+.play-symbol {
   color: var(--oro);
-  text-decoration: underline;
+  font-size: 15px;
 }
 
-li button {
-  margin: 5px 3px 0;
-}
-
-.note {
+#status {
+  margin-top: 12px;
   color: var(--secondario);
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.5;
 }
 
-@media (max-width: 520px) {
+footer {
+  margin-top: 35px;
+  color: #8e7953;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* ADATTAMENTO A TABLET E SMARTPHONE */
+
+@media (max-width: 760px) {
   body {
-    padding: 10px 7px;
+    padding: 13px;
   }
 
-  .player {
-    padding: 15px 12px;
+  .outer-frame {
+    padding: 8px;
+    box-shadow:
+      0 0 0 3px #0a0907,
+      0 0 0 4px #8b6b35,
+      0 0 22px #000;
   }
 
-  .masthead {
-    gap: 7px;
-    padding-bottom: 18px;
+  .inner-frame {
+    padding: 30px 17px;
   }
 
-  .masthead h1 {
-    font-size: 27px;
+  .corner {
+    width: 27px;
+    height: 27px;
   }
 
-  .subtitle {
-    font-size: 13px;
-    letter-spacing: 0;
+  .main-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
   }
 
-  .sagittarius {
-    width: 43px;
-    height: 43px;
+  .artwork {
+    max-width: 270px;
   }
 
   .signature {
-    font-size: 19px;
+    font-size: 17px;
   }
 
-  button {
-    padding: 9px 10px;
-    font-size: 13px;
+  .music-area {
+    width: 100%;
+  }
+
+  .eyebrow {
+    text-align: center;
+    letter-spacing: 3px;
+  }
+
+  h1 {
+    font-size: clamp(36px, 9vw, 48px);
+    text-align: center;
+  }
+
+  .subtitle {
+    text-align: center;
+  }
+
+  .player {
+    padding: 15px;
+  }
+
+  .playlist-heading h2 {
+    font-size: 18px;
+  }
+
+  footer {
+    line-height: 1.8;
+  }
+}
+
+@media (max-width: 360px) {
+  body {
+    padding: 9px;
+  }
+
+  .inner-frame {
+    padding: 26px 12px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .song-button {
+    padding: 10px 8px;
+    gap: 8px;
   }
 }
 </style>
 </head>
 
 <body>
-<div class="player">
+<div class="page">
+  <div class="outer-frame">
+    <div class="inner-frame">
 
-  <header class="masthead">
-    <div>
-      <h1>La stanza<br>della musica</h1>
-      <div class="subtitle">Siediti, scegli, ascolta 🎵</div>
+      <span class="corner tl"><span></span></span>
+      <span class="corner tr"><span></span></span>
+      <span class="corner bl"><span></span></span>
+      <span class="corner br"><span></span></span>
+
+      <main class="main-layout">
+
+        <section class="artwork" aria-label="Emblema del centauro">
+          <svg viewBox="0 0 420 440" xmlns="http://www.w3.org/2000/svg"
+               role="img" aria-label="Centauro dorato con arco">
+
+            <defs>
+              <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff0b2"/>
+                <stop offset="35%" stop-color="#d8b66c"/>
+                <stop offset="65%" stop-color="#9e7737"/>
+                <stop offset="100%" stop-color="#f3d992"/>
+              </linearGradient>
+              <radialGradient id="halo">
+                <stop offset="0%" stop-color="#b58a3b" stop-opacity=".16"/>
+                <stop offset="100%" stop-color="#b58a3b" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+
+            <circle cx="210" cy="202" r="174" fill="url(#halo)"/>
+            <circle cx="210" cy="202" r="158" fill="none"
+                    stroke="url(#gold)" stroke-width="1.5"/>
+            <circle cx="210" cy="202" r="148" fill="none"
+                    stroke="#9b783c" stroke-width=".7" stroke-dasharray="2 7"/>
+
+            {#each Array.from({length:36}, (_,i)=>i) as i}
+              <line
+                x1={210 + 163*Math.cos(i*Math.PI/18)}
+                y1={202 + 163*Math.sin(i*Math.PI/18)}
+                x2={210 + (i%3===0?174:168)*Math.cos(i*Math.PI/18)}
+                y2={202 + (i%3===0?174:168)*Math.sin(i*Math.PI/18)}
+                stroke="#d8b66c"
+                stroke-width={i%3===0?1.5:.7}/>
+            {/each}
+
+            <!-- Piccole stelle ornamentali -->
+            <g fill="#e4c57c">
+              <path d="M210 30 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4z"/>
+              <path d="M75 145 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/>
+              <path d="M340 260 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/>
+              <circle cx="111" cy="90" r="2"/>
+              <circle cx="316" cy="104" r="2"/>
+              <circle cx="100" cy="285" r="2"/>
+              <circle cx="315" cy="322" r="2"/>
+            </g>
+
+            <!-- Centauro: cavallo e arciere in linea dorata -->
+            <g fill="#17130c" stroke="url(#gold)" stroke-width="3.5"
+               stroke-linecap="round" stroke-linejoin="round">
+
+              <!-- Coda e corpo del cavallo -->
+              <path d="M165 224
+                       C143 236 123 253 111 276
+                       C103 291 94 297 82 291
+                       C91 306 108 311 120 294
+                       C136 274 154 265 176 265"/>
+              <path d="M161 220
+                       C184 204 222 205 250 221
+                       C270 232 281 251 282 272
+                       L270 299 L246 300 L249 272
+                       C226 264 208 263 190 269
+                       L176 303 L153 303 L163 265
+                       C143 271 132 265 131 252
+                       C130 239 143 227 161 220 Z"
+                    fill="#211a0d"/>
+              <!-- Zampe -->
+              <path d="M156 261 L139 298 L143 330 L128 333
+                       L118 327 L124 301 L133 265"/>
+              <path d="M177 265 L184 297 L176 326 L160 329
+                       L153 322 L163 296 L159 268"/>
+              <path d="M251 267 L263 295 L287 316 L279 328
+                       L265 326 L244 307 L230 273"/>
+              <path d="M270 263 L294 286 L307 309 L296 319
+                       L283 311 L265 287"/>
+
+              <!-- Torso umano -->
+              <path d="M183 219
+                       C181 199 187 180 197 163
+                       L214 143 L236 150 L247 174
+                       L239 195 L253 218 L232 232
+                       L207 218 Z"
+                    fill="#211a0d"/>
+              <!-- Braccio che tende l'arco -->
+              <path d="M205 161 L230 139 L258 116 L269 123
+                       L246 148 L226 174"/>
+              <!-- Braccio teso -->
+              <path d="M236 169 L266 154 L284 132 L292 139
+                       L276 163 L247 190"/>
+              <!-- Testa -->
+              <path d="M201 143 L196 125 L202 107 L218 101
+                       L231 109 L232 124 L220 138 Z"
+                    fill="#211a0d"/>
+              <!-- Capelli -->
+              <path d="M197 126 L190 111 L197 94 L208 88
+                       L222 94 L231 108 L220 103 L211 109
+                       L208 126 L201 133 Z"/>
+              <path d="M195 105 L184 99 L192 117"/>
+              <!-- Arco e corda -->
+              <path d="M263 91 Q310 134 265 177"
+                    fill="none" stroke-width="4"/>
+              <path d="M263 91 L265 177" fill="none" stroke-width="1.2"/>
+              <!-- Freccia -->
+              <path d="M220 134 L302 134"/>
+              <path d="M302 134 L291 128 M302 134 L291 140"
+                    fill="none"/>
+              <!-- Dettagli muscolari -->
+              <path d="M173 230 Q201 241 228 228"/>
+              <path d="M199 175 L214 188 L207 204"/>
+              <path d="M248 238 Q263 245 270 259"/>
+              <path d="M141 301 L145 312"/>
+              <path d="M177 302 L172 313"/>
+            </g>
+
+            <path d="M82 360 Q210 379 338 360"
+                  fill="none" stroke="#b58a3b" stroke-width="1"/>
+            <text x="210" y="389" fill="#d8b66c"
+                  font-family="Georgia,serif" font-size="12"
+                  letter-spacing="4" text-anchor="middle">SAGITTARIUS</text>
+          </svg>
+
+          <div class="signature">
+            Mr Gos
+            <small>La mia musica, i miei ricordi</small>
+          </div>
+        </section>
+
+        <section class="music-area">
+          <div class="eyebrow">Un viaggio tra le emozioni</div>
+          <h1>La stanza<br>della musica</h1>
+          <p class="subtitle">Siediti, scegli, ascolta 🎵</p>
+
+          <div class="gold-rule"></div>
+
+          <section class="player">
+            <div class="now-label">In ascolto</div>
+            <div id="now">Scegli un brano dalla lista</div>
+
+            <audio id="audio" controls preload="metadata">
+              Il tuo browser non supporta il lettore audio.
+            </audio>
+
+            <p class="player-note">
+              Ogni canzone custodisce un ricordo.
+              Scegli la tua e lasciati accompagnare dalla musica.
+            </p>
+          </section>
+
+          <div class="playlist-heading">
+            <h2>I brani della stanza</h2>
+            <span id="count">Caricamento…</span>
+          </div>
+
+          <ol id="playlist"></ol>
+          <div id="status" aria-live="polite">
+            Sto cercando i brani disponibili…
+          </div>
+        </section>
+      </main>
+
+      <footer>LA STANZA DELLA MUSICA · UN PROGETTO DI MR GOS</footer>
     </div>
-
-    <div class="signature-area">
-
-      <!-- Sagittario stilizzato, disegnato direttamente nel codice -->
-      <svg class="sagittarius"
-           viewBox="0 0 100 100"
-           xmlns="http://www.w3.org/2000/svg"
-           role="img"
-           aria-label="Sagittario, arciere mitologico">
-
-        <g fill="none" stroke="currentColor"
-           stroke-width="2.4"
-           stroke-linecap="round"
-           stroke-linejoin="round">
-
-          <!-- Arco e freccia -->
-          <path d="M58 13 L88 9 L84 39"/>
-          <path d="M88 9 L48 49"/>
-          <path d="M72 25 L87 40"/>
-          <path d="M59 17 Q91 22 84 39"/>
-
-          <!-- Testa e busto dell'arciere -->
-          <circle cx="43" cy="20" r="6"/>
-          <path d="M39 27 L32 42 L46 49 L56 36"/>
-          <path d="M36 31 L23 37 L16 29"/>
-          <path d="M47 30 L61 24"/>
-
-          <!-- Corpo del cavallo -->
-          <path d="M32 42
-                   Q48 38 60 48
-                   L69 43 L76 47
-                   L68 54
-                   Q58 61 42 59
-                   L31 54 Z"/>
-
-          <!-- Zampe -->
-          <path d="M39 57 L35 72 L26 82"/>
-          <path d="M48 59 L52 72 L48 86"/>
-          <path d="M60 55 L68 67 L78 73"/>
-          <path d="M33 47 L22 49 L16 59"/>
-
-          <!-- Coda -->
-          <path d="M42 58 Q34 64 27 60 Q22 57 25 53"/>
-
-          <!-- Arco tenuto dalla mano -->
-          <path d="M17 29 Q7 40 18 50"/>
-          <path d="M17 29 L23 37"/>
-        </g>
-      </svg>
-
-      <span class="signature">Mr Gos</span>
-    </div>
-  </header>
-
-  <div id="now">Scegli una canzone</div>
-
-  <audio id="audio" controls preload="none"></audio>
-
-  <div class="controls">
-    <button id="prev">⏮ Precedente</button>
-    <button id="next">Successiva ⏭</button>
   </div>
-
-  <h3>Tutti i brani</h3>
-  <ol id="playlist"></ol>
-
-  <p class="note">
-    Premi sul titolo per ascoltare un brano.
-    Usa “Aggiungi” per inserirlo nella tua playlist personale.
-  </p>
-
-  <h3>La mia playlist personale</h3>
-  <ol id="miaPlaylist"></ol>
-
 </div>
 
 <script>
-let brani = [];
+const OWNER = "gozzimarco0508-hub";
+const REPO = "stanza-musica";
+const BRANCH = "main";
 
 const audio = document.getElementById("audio");
-const elenco = document.getElementById("playlist");
-const nome = document.getElementById("now");
-const elencoMia = document.getElementById("miaPlaylist");
+const now = document.getElementById("now");
+const playlist = document.getElementById("playlist");
+const count = document.getElementById("count");
+const status = document.getElementById("status");
 
-let corrente = 0;
-let miaPlaylist = [];
+let songs = [];
+let currentSong = -1;
 
-try {
-  miaPlaylist = JSON.parse(
-    localStorage.getItem("miaPlaylist") || "[]"
-  );
-
-  if (!Array.isArray(miaPlaylist)) {
-    miaPlaylist = [];
-  }
-} catch (errore) {
-  miaPlaylist = [];
+function prettyName(filename) {
+  return filename
+    .replace(/\.mp3$/i, "")
+    .replace(/^\d+\s*[-._]?\s*/, "")
+    .replace(/[_]+/g, " ")
+    .trim();
 }
 
-async function caricaBrani() {
+function playSong(index) {
+  if (index < 0 || index >= songs.length) return;
+
+  currentSong = index;
+  const song = songs[index];
+
+  audio.src = song.url;
+  now.textContent = song.title;
+  audio.play().catch(() => {
+    status.textContent =
+      "Premi Play nel lettore per iniziare l'ascolto.";
+  });
+
+  renderPlaylist();
+}
+
+function renderPlaylist() {
+  playlist.innerHTML = "";
+
+  songs.forEach((song, index) => {
+    const li = document.createElement("li");
+    const button = document.createElement("button");
+    const number = document.createElement("span");
+    const title = document.createElement("span");
+    const symbol = document.createElement("span");
+
+    button.type = "button";
+    button.className = "song-button" +
+      (index === currentSong ? " active" : "");
+    button.setAttribute("aria-label", "Ascolta " + song.title);
+
+    number.className = "song-number";
+    number.textContent = String(index + 1).padStart(2, "0");
+
+    title.className = "song-title";
+    title.textContent = song.title;
+
+    symbol.className = "play-symbol";
+    symbol.textContent = index === currentSong ? "♫" : "▶";
+
+    button.append(number, title, symbol);
+    button.addEventListener("click", () => playSong(index));
+
+    li.appendChild(button);
+    playlist.appendChild(li);
+  });
+
+  count.textContent = songs.length +
+    (songs.length === 1 ? " brano" : " brani");
+}
+
+async function loadSongs() {
   try {
-    const risposta = await fetch(
-      "https://api.github.com/repos/gozzimarco0508-hub/stanza-musica/contents/"
+    const response = await fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/contents/?ref=${BRANCH}`
     );
 
-    if (!risposta.ok) {
-      throw new Error("Errore nel caricamento");
+    if (!response.ok) {
+      throw new Error("Non riesco a leggere l'elenco dei file.");
     }
 
-    const files = await risposta.json();
+    const files = await response.json();
 
-    brani = files
+    songs = files
       .filter(file =>
-        file.type === "file" &&
-        file.name.toLowerCase().endsWith(".mp3")
+        file.type === "file" && /\.mp3$/i.test(file.name)
       )
       .sort((a, b) =>
         a.name.localeCompare(b.name, "it", {
@@ -342,176 +667,31 @@ async function caricaBrani() {
         })
       )
       .map(file => ({
-        titolo: file.name.replace(/\.mp3$/i, ""),
-        file: file.name
+        filename: file.name,
+        title: prettyName(file.name),
+        url: file.download_url
       }));
 
-    mostraPlaylist();
+    renderPlaylist();
 
-    if (brani.length === 0) {
-      nome.textContent = "Nessun brano MP3 trovato";
-    }
-  } catch (errore) {
-    nome.textContent = "Impossibile caricare la playlist";
+    status.textContent = songs.length
+      ? "Scegli un brano e premi Play. Buon ascolto!"
+      : "Non ho trovato file MP3 nella cartella principale del progetto.";
+  } catch (error) {
+    count.textContent = "";
+    status.textContent =
+      "Non riesco a caricare la lista. Riprova tra qualche istante.";
+    console.error(error);
   }
 }
-
-function mostraPlaylist() {
-  elenco.innerHTML = "";
-
-  brani.forEach((brano, indice) => {
-    const voce = document.createElement("li");
-
-    const titolo = document.createElement("span");
-    titolo.className = "song-title";
-    titolo.textContent = brano.titolo;
-    titolo.onclick = () => riproduci(indice);
-
-    voce.appendChild(titolo);
-
-    const aggiungi = document.createElement("button");
-    aggiungi.textContent = "＋ Aggiungi";
-    aggiungi.onclick = () =>
-      aggiungiAllaMiaPlaylist(brano.file);
-
-    voce.appendChild(aggiungi);
-    elenco.appendChild(voce);
-  });
-
-  mostraMiaPlaylist();
-}
-
-function salvaMiaPlaylist() {
-  localStorage.setItem(
-    "miaPlaylist",
-    JSON.stringify(miaPlaylist)
-  );
-}
-
-function aggiungiAllaMiaPlaylist(file) {
-  if (miaPlaylist.includes(file)) {
-    nome.textContent = "Il brano è già nella tua playlist";
-    return;
-  }
-
-  miaPlaylist.push(file);
-  salvaMiaPlaylist();
-  mostraMiaPlaylist();
-  nome.textContent = "Brano aggiunto alla tua playlist";
-}
-
-function mostraMiaPlaylist() {
-  elencoMia.innerHTML = "";
-
-  miaPlaylist = miaPlaylist.filter(file =>
-    brani.some(brano => brano.file === file)
-  );
-
-  miaPlaylist.forEach((file, indice) => {
-    const brano = brani.find(
-      elemento => elemento.file === file
-    );
-
-    if (!brano) return;
-
-    const voce = document.createElement("li");
-
-    const titolo = document.createElement("span");
-    titolo.className = "song-title";
-    titolo.textContent = brano.titolo;
-    titolo.onclick = () =>
-      riproduci(
-        brani.findIndex(elemento => elemento.file === file)
-      );
-
-    voce.appendChild(titolo);
-
-    const su = document.createElement("button");
-    su.textContent = "↑";
-    su.disabled = indice === 0;
-    su.onclick = () => spostaBrano(indice, -1);
-    voce.appendChild(su);
-
-    const giu = document.createElement("button");
-    giu.textContent = "↓";
-    giu.disabled = indice === miaPlaylist.length - 1;
-    giu.onclick = () => spostaBrano(indice, 1);
-    voce.appendChild(giu);
-
-    const rimuovi = document.createElement("button");
-    rimuovi.textContent = "Rimuovi";
-    rimuovi.onclick = () =>
-      rimuoviDallaMiaPlaylist(indice);
-
-    voce.appendChild(rimuovi);
-    elencoMia.appendChild(voce);
-  });
-
-  salvaMiaPlaylist();
-}
-
-function spostaBrano(indice, direzione) {
-  const nuovoIndice = indice + direzione;
-
-  if (
-    nuovoIndice < 0 ||
-    nuovoIndice >= miaPlaylist.length
-  ) {
-    return;
-  }
-
-  [
-    miaPlaylist[indice],
-    miaPlaylist[nuovoIndice]
-  ] = [
-    miaPlaylist[nuovoIndice],
-    miaPlaylist[indice]
-  ];
-
-  salvaMiaPlaylist();
-  mostraMiaPlaylist();
-}
-
-function rimuoviDallaMiaPlaylist(indice) {
-  miaPlaylist.splice(indice, 1);
-  salvaMiaPlaylist();
-  mostraMiaPlaylist();
-}
-
-function riproduci(indice) {
-  if (brani.length === 0) {
-    nome.textContent = "Nessun brano disponibile";
-    return;
-  }
-
-  corrente = (indice + brani.length) % brani.length;
-
-  audio.src = brani[corrente].file;
-  nome.textContent = brani[corrente].titolo;
-
-  [...elenco.children].forEach((voce, i) => {
-    voce.classList.toggle("active", i === corrente);
-  });
-
-  audio.play().catch(() => {
-    nome.textContent =
-      brani[corrente].titolo +
-      " — premi Play per ascoltare";
-  });
-}
-
-document.getElementById("prev").onclick =
-  () => riproduci(corrente - 1);
-
-document.getElementById("next").onclick =
-  () => riproduci(corrente + 1);
 
 audio.addEventListener("ended", () => {
-  riproduci(corrente + 1);
+  if (currentSong >= 0 && currentSong + 1 < songs.length) {
+    playSong(currentSong + 1);
+  }
 });
 
-caricaBrani();
+loadSongs();
 </script>
 </body>
 </html>
-
