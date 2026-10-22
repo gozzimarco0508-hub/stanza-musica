@@ -110,10 +110,10 @@ button, input {
 
 /* STRUTTURA PRINCIPALE */
 .main-layout {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.35fr);
+  gap: clamp(28px, 5vw, 65px);
   align-items: center;
-  gap: 30px;
   width: 100%;
 }
 .artwork {
