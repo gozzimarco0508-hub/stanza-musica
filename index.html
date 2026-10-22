@@ -109,6 +109,7 @@ button, input {
 }
 
 /* STRUTTURA PRINCIPALE */
+.ma
 .main-layout {
   display: grid;
   grid-template-columns: minmax(0, .82fr) minmax(0, 1.35fr);
@@ -116,6 +117,16 @@ button, input {
   align-items: start;
   width: 100%;
 }
+
+.left-gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  width: 100%;
+}
+
 .artwork {
   width: 100%;
   max-width: 390px;
@@ -123,8 +134,6 @@ button, input {
   text-align: center;
   transform: translateY(-35px);
 }
-
-/* NUOVA IMMAGINE DEL CENTAURO */
 
 .centaur-image {
   display: block;
@@ -134,6 +143,22 @@ button, input {
   object-fit: contain;
   filter: drop-shadow(0 0 14px #d8b66c18);
 }
+
+.vespa-artwork {
+  width: 100%;
+  max-width: 390px;
+  margin-top: -20px;
+  text-align: center;
+}
+
+.vespa-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px #d8b66c18);
+}
+
 
 .signature {
   margin-top: 4px;
@@ -343,6 +368,17 @@ footer {
 
   .artwork {
     max-width: 270px;
+    
+  .left-gallery {
+    width: 100%;
+  }
+
+  .vespa-artwork {
+    max-width: 270px;
+    margin-top: -10px;
+  }
+
+    
   }
 
   .signature {
@@ -413,21 +449,39 @@ footer {
 
       <main class="main-layout">
 
-        <section class="artwork" aria-label="Emblema del centauro">
+     
 
-          <img
-            class="centaur-image"
-          src="vagabondo%20centauro.png"
-            alt="Centauro dorato con arco"
-          >
+     
+<section class="left-gallery">
 
-          <div class="signature">
-            Mr Gos
-            <small>La mia musica, i miei ricordi</small>
-          </div>
-        </section>
+  <section class="artwork" aria-label="Emblema del centauro">
 
-        <section class="music-area">
+    <img
+      class="centaur-image"
+      src="vagabondo%20centauro.png"
+      alt="Centauro dorato con arco"
+    >
+
+    <div class="signature">
+      Mr Gos
+      <small>La mia musica, i miei ricordi</small>
+    </div>
+
+  </section>
+
+  <div class="vespa-artwork">
+    <img
+      src="vespa.png"
+      alt="La Vespa di Mr Gos"
+      class="vespa-image"
+    >
+  </div>
+
+</section>
+
+<section class="music-area">
+
+         
           <div class="eyebrow">Un viaggio tra le emozioni</div>
           <h1>La stanza<br>della musica</h1>
           <p class="subtitle">Siediti, scegli, ascolta 🎵</p>
