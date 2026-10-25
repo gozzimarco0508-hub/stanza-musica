@@ -16,23 +16,18 @@
   --secondario: #a99c82;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   padding: 24px;
   min-height: 100vh;
   color: var(--testo);
-  background:
-    radial-gradient(ellipse at top, #30271a 0%, #12110f 45%, #050505 100%);
+  background: radial-gradient(ellipse at top, #30271a 0%, #12110f 45%, #050505 100%);
   font-family: Georgia, "Times New Roman", serif;
 }
 
-button, input {
-  font: inherit;
-}
+button, input { font: inherit; }
 
 .page {
   width: 100%;
@@ -40,32 +35,22 @@ button, input {
   margin: 0 auto;
 }
 
-/* CORNICE ESTERNA */
-
 .outer-frame {
   position: relative;
   padding: 15px;
   border: 2px solid var(--oro);
   border-radius: 10px;
   background: linear-gradient(145deg, #191712, #050505 65%, #17130b);
-  box-shadow:
-    0 0 0 5px #0a0907,
-    0 0 0 7px #8b6b35,
-    0 0 35px #000,
-    0 0 35px #9a772b24;
+  box-shadow: 0 0 0 5px #0a0907, 0 0 0 7px #8b6b35, 0 0 35px #000, 0 0 35px #9a772b24;
 }
 
 .inner-frame {
   position: relative;
   padding: clamp(20px, 4vw, 48px);
   border: 1px solid #9d7c3d;
-  background:
-    radial-gradient(ellipse at 15% 20%, #392c171c, transparent 50%),
-    linear-gradient(135deg, #11100d, #080808 70%);
+  background: radial-gradient(ellipse at 15% 20%, #392c171c, transparent 50%), linear-gradient(135deg, #11100d, #080808 70%);
   overflow: hidden;
 }
-
-/* DECORI AGLI ANGOLI */
 
 .corner {
   position: absolute;
@@ -76,22 +61,14 @@ button, input {
   opacity: .9;
 }
 
-.corner::before,
-.corner::after {
+.corner::before, .corner::after {
   content: "";
   position: absolute;
   background: var(--oro);
 }
 
-.corner::before {
-  width: 100%;
-  height: 1px;
-}
-
-.corner::after {
-  width: 1px;
-  height: 100%;
-}
+.corner::before { width: 100%; height: 1px; }
+.corner::after { width: 1px; height: 100%; }
 
 .corner.tl { top: 8px; left: 8px; }
 .corner.tr { top: 8px; right: 8px; transform: rotate(90deg); }
@@ -109,7 +86,6 @@ button, input {
 }
 
 /* STRUTTURA PRINCIPALE */
-
 .main-layout {
   display: grid;
   grid-template-columns: minmax(0, .82fr) minmax(0, 1.35fr);
@@ -159,7 +135,6 @@ button, input {
   filter: drop-shadow(0 0 14px #d8b66c18);
 }
 
-
 .signature {
   margin-top: 4px;
   color: var(--oro);
@@ -177,9 +152,7 @@ button, input {
   text-transform: uppercase;
 }
 
-.music-area {
-  min-width: 0;
-}
+.music-area { min-width: 0; }
 
 .eyebrow {
   color: var(--oro);
@@ -211,7 +184,6 @@ h1 {
 }
 
 /* LETTORE AUDIO */
-
 .player {
   padding: 20px;
   border: 1px solid #6e562d;
@@ -250,7 +222,6 @@ audio {
 }
 
 /* ELENCO DEI BRANI */
-
 .playlist-heading {
   display: flex;
   justify-content: space-between;
@@ -259,19 +230,19 @@ audio {
   margin: 24px 0 12px;
 }
 
-.playlist-heading h2 {
+.playlist-heading h2, .personal-playlist h2 {
   margin: 0;
   color: var(--oro-chiaro);
   font-size: 20px;
   font-weight: normal;
 }
 
-#count {
+#count, #queue-count {
   color: var(--secondario);
   font-size: 12px;
 }
 
-#playlist {
+#playlist, #my-playlist {
   display: grid;
   gap: 7px;
   padding: 0;
@@ -279,9 +250,7 @@ audio {
   list-style: none;
 }
 
-#playlist li {
-  min-width: 0;
-}
+#playlist li { min-width: 0; }
 
 .song-button {
   display: flex;
@@ -298,8 +267,7 @@ audio {
   transition: border-color .2s, background .2s;
 }
 
-.song-button:hover,
-.song-button.active {
+.song-button:hover, .song-button.active {
   border-color: var(--oro);
   background: #282114;
 }
@@ -329,6 +297,76 @@ audio {
   line-height: 1.5;
 }
 
+/* PULSANTI AGGIUNGI */
+.song-actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.add-button, .queue-action {
+  border: 1px solid #6e562d;
+  border-radius: 4px;
+  color: var(--oro-chiaro);
+  background: #1a1710;
+  padding: 7px 9px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.add-button:hover, .queue-action:hover {
+  border-color: var(--oro-chiaro);
+  background: #302515;
+}
+
+/* LA MIA PLAYLIST PERSONALE */
+.personal-playlist { margin-top: 25px; }
+
+.personal-playlist h2 { margin-bottom: 12px; }
+
+#my-playlist li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid #332b1d;
+  border-radius: 4px;
+  background: #100f0c;
+}
+
+.queue-title {
+  flex: 1;
+  min-width: 0;
+  color: var(--testo);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.queue-play {
+  width: 100%;
+  padding: 4px 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.queue-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.queue-action { padding: 6px 7px; }
+
+#queue-empty {
+  color: var(--secondario);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 footer {
   margin-top: 35px;
   color: #8e7953;
@@ -337,62 +375,34 @@ footer {
   text-align: center;
 }
 
-/* ADATTAMENTO A TABLET E SMARTPHONE */
-
+/* TABLET E SMARTPHONE */
 @media (max-width: 760px) {
-  body {
-    padding: 13px;
-  }
+  body { padding: 13px; }
 
   .outer-frame {
     padding: 8px;
-    box-shadow:
-      0 0 0 3px #0a0907,
-      0 0 0 4px #8b6b35,
-      0 0 22px #000;
+    box-shadow: 0 0 0 3px #0a0907, 0 0 0 4px #8b6b35, 0 0 22px #000;
   }
 
-  .inner-frame {
-    padding: 30px 17px;
-  }
+  .inner-frame { padding: 30px 17px; }
 
-  .corner {
-    width: 27px;
-    height: 27px;
-  }
+  .corner { width: 27px; height: 27px; }
 
   .main-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 18px;
   }
 
- 
-  .artwork {
-    max-width: 270px;
-  }
-
-  .left-gallery {
-    width: 100%;
-  }
+  .artwork { max-width: 270px; }
+  .left-gallery { width: 100%; }
 
   .vespa-artwork {
     max-width: 270px;
     margin-top: -10px;
   }
 
-
-  
-
-    
-  
-
-  .signature {
-    font-size: 17px;
-  }
-
-  .music-area {
-    width: 100%;
-  }
+  .signature { font-size: 17px; }
+  .music-area { width: 100%; }
 
   .eyebrow {
     text-align: center;
@@ -404,41 +414,24 @@ footer {
     text-align: center;
   }
 
-  .subtitle {
-    text-align: center;
-  }
+  .subtitle { text-align: center; }
+  .player { padding: 15px; }
+  .playlist-heading h2, .personal-playlist h2 { font-size: 18px; }
+  footer { line-height: 1.8; }
 
-  .player {
-    padding: 15px;
-  }
-
-  .playlist-heading h2 {
-    font-size: 18px;
-  }
-
-  footer {
-    line-height: 1.8;
-  }
+  .song-button { gap: 7px; padding: 10px 8px; }
+  .add-button { padding: 7px 6px; }
+  #my-playlist li { flex-wrap: wrap; }
+  .queue-buttons { margin-left: auto; }
 }
 
 @media (max-width: 360px) {
-  body {
-    padding: 9px;
-  }
-
-  .inner-frame {
-    padding: 26px 12px;
-  }
-
-  h1 {
-    font-size: 34px;
-  }
-
-  .song-button {
-    padding: 10px 8px;
-    gap: 8px;
-  }
+  body { padding: 9px; }
+  .inner-frame { padding: 26px 12px; }
+  h1 { font-size: 34px; }
 }
+
+/* FINE STILI */
 </style>
 </head>
 
@@ -454,39 +447,21 @@ footer {
 
       <main class="main-layout">
 
-     
+        <section class="left-gallery">
+          <section class="artwork" aria-label="Emblema del centauro">
+            <img class="centaur-image" src="vagabondo%20centauro.png" alt="Centauro dorato con arco">
+            <div class="signature">
+              Mr Gos
+              <small>La mia musica, i miei ricordi</small>
+            </div>
+          </section>
 
-     
-<section class="left-gallery">
+          <div class="vespa-artwork">
+            <img src="vespa.png" alt="La Vespa di Mr Gos" class="vespa-image">
+          </div>
+        </section>
 
-  <section class="artwork" aria-label="Emblema del centauro">
-
-    <img
-      class="centaur-image"
-      src="vagabondo%20centauro.png"
-      alt="Centauro dorato con arco"
-    >
-
-    <div class="signature">
-      Mr Gos
-      <small>La mia musica, i miei ricordi</small>
-    </div>
-
-  </section>
-
-  <div class="vespa-artwork">
-    <img
-      src="vespa.png"
-      alt="La Vespa di Mr Gos"
-      class="vespa-image"
-    >
-  </div>
-
-</section>
-
-<section class="music-area">
-
-         
+        <section class="music-area">
           <div class="eyebrow">Un viaggio tra le emozioni</div>
           <h1>La stanza<br>della musica</h1>
           <p class="subtitle">Siediti, scegli, ascolta 🎵</p>
@@ -496,11 +471,9 @@ footer {
           <section class="player">
             <div class="now-label">In ascolto</div>
             <div id="now">Scegli un brano dalla lista</div>
-
             <audio id="audio" controls preload="metadata">
               Il tuo browser non supporta il lettore audio.
             </audio>
-
             <p class="player-note">
               Ogni canzone custodisce un ricordo.
               Scegli la tua e lasciati accompagnare dalla musica.
@@ -517,6 +490,15 @@ footer {
           <div id="status" aria-live="polite">
             Sto cercando i brani disponibili…
           </div>
+
+          <section class="personal-playlist" aria-label="La mia playlist personale">
+            <div class="playlist-heading">
+              <h2>La mia playlist</h2>
+              <span id="queue-count">0 brani</span>
+            </div>
+            <ol id="my-playlist"></ol>
+            <p id="queue-empty">La tua playlist è vuota. Premi «Aggiungi» accanto ai brani che vuoi ascoltare.</p>
+          </section>
         </section>
       </main>
 
@@ -529,15 +511,22 @@ footer {
 const OWNER = "gozzimarco0508-hub";
 const REPO = "stanza-musica";
 const BRANCH = "main";
+const QUEUE_STORAGE_KEY = "mrGosMusicPersonalPlaylistV1";
 
 const audio = document.getElementById("audio");
 const now = document.getElementById("now");
 const playlist = document.getElementById("playlist");
 const count = document.getElementById("count");
 const status = document.getElementById("status");
+const myPlaylist = document.getElementById("my-playlist");
+const queueCount = document.getElementById("queue-count");
+const queueEmpty = document.getElementById("queue-empty");
 
 let songs = [];
+let personalQueue = [];
 let currentSong = -1;
+let currentQueueId = null;
+let nextQueueId = 1;
 
 function prettyName(filename) {
   return filename
@@ -547,21 +536,114 @@ function prettyName(filename) {
     .trim();
 }
 
+function saveQueue() {
+  try {
+    localStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(personalQueue));
+  } catch (error) {
+    console.warn("Non riesco a salvare la playlist in questo browser.", error);
+  }
+}
+
+function loadSavedQueue() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(QUEUE_STORAGE_KEY) || "[]");
+    if (Array.isArray(saved)) {
+      personalQueue = saved
+        .filter(item => item && typeof item.filename === "string")
+        .map(item => ({
+          id: Number.isInteger(item.id) ? item.id : nextQueueId++,
+          filename: item.filename,
+          title: typeof item.title === "string" ? item.title : prettyName(item.filename)
+        }));
+      nextQueueId = Math.max(1, ...personalQueue.map(item => item.id + 1));
+    }
+  } catch (error) {
+    personalQueue = [];
+  }
+}
+
+function findSongByFilename(filename) {
+  return songs.find(song => song.filename === filename);
+}
+
 function playSong(index) {
   if (index < 0 || index >= songs.length) return;
-
   currentSong = index;
-  const song = songs[index];
+  currentQueueId = null;
 
+  const song = songs[index];
   audio.src = song.url;
   now.textContent = song.title;
 
   audio.play().catch(() => {
-    status.textContent =
-      "Premi Play nel lettore per iniziare l'ascolto.";
+    status.textContent = "Premi Play nel lettore per iniziare l'ascolto.";
   });
 
   renderPlaylist();
+  renderPersonalPlaylist();
+}
+
+function playQueueItem(queueId) {
+  const queueIndex = personalQueue.findIndex(item => item.id === queueId);
+  if (queueIndex < 0) return;
+
+  const item = personalQueue[queueIndex];
+  const song = findSongByFilename(item.filename);
+
+  if (!song) {
+    status.textContent = "Questo brano non è disponibile tra i file MP3 attuali su GitHub.";
+    return;
+  }
+
+  currentQueueId = item.id;
+  currentSong = songs.indexOf(song);
+  audio.src = song.url;
+  now.textContent = item.title;
+
+  audio.play().catch(() => {
+    status.textContent = "Premi Play nel lettore per iniziare l'ascolto.";
+  });
+
+  renderPlaylist();
+  renderPersonalPlaylist();
+}
+
+function addToQueue(song) {
+  personalQueue.push({
+    id: nextQueueId++,
+    filename: song.filename,
+    title: song.title
+  });
+
+  saveQueue();
+  renderPlaylist();
+  renderPersonalPlaylist();
+  status.textContent = "Aggiunto alla tua playlist: " + song.title;
+}
+
+function removeFromQueue(queueId) {
+  const index = personalQueue.findIndex(item => item.id === queueId);
+  if (index < 0) return;
+
+  if (currentQueueId === queueId) currentQueueId = null;
+  personalQueue.splice(index, 1);
+
+  saveQueue();
+  renderPlaylist();
+  renderPersonalPlaylist();
+}
+
+function moveQueueItem(queueId, direction) {
+  const index = personalQueue.findIndex(item => item.id === queueId);
+  const target = index + direction;
+
+  if (index < 0 || target < 0 || target >= personalQueue.length) return;
+
+  [personalQueue[index], personalQueue[target]] =
+    [personalQueue[target], personalQueue[index]];
+
+  saveQueue();
+  renderPersonalPlaylist();
 }
 
 function renderPlaylist() {
@@ -569,14 +651,24 @@ function renderPlaylist() {
 
   songs.forEach((song, index) => {
     const li = document.createElement("li");
+    const row = document.createElement("div");
+
+    row.style.display = "flex";
+    row.style.alignItems = "stretch";
+    row.style.gap = "7px";
+    row.style.minWidth = "0";
+
     const button = document.createElement("button");
     const number = document.createElement("span");
     const title = document.createElement("span");
     const symbol = document.createElement("span");
+    const actions = document.createElement("div");
+    const addButton = document.createElement("button");
 
     button.type = "button";
-    button.className = "song-button" +
-      (index === currentSong ? " active" : "");
+    button.className = "song-button" + (index === currentSong ? " active" : "");
+    button.style.flex = "1";
+    button.style.minWidth = "0";
     button.setAttribute("aria-label", "Ascolta " + song.title);
 
     number.className = "song-number";
@@ -591,12 +683,73 @@ function renderPlaylist() {
     button.append(number, title, symbol);
     button.addEventListener("click", () => playSong(index));
 
-    li.appendChild(button);
+    actions.className = "song-actions";
+    addButton.type = "button";
+    addButton.className = "add-button";
+    addButton.textContent = "＋ Aggiungi";
+    addButton.setAttribute("aria-label", "Aggiungi " + song.title + " alla tua playlist");
+    addButton.addEventListener("click", () => addToQueue(song));
+
+    actions.appendChild(addButton);
+    row.append(button, actions);
+    li.appendChild(row);
     playlist.appendChild(li);
   });
 
-  count.textContent = songs.length +
-    (songs.length === 1 ? " brano" : " brani");
+  count.textContent = songs.length + (songs.length === 1 ? " brano" : " brani");
+}
+
+function renderPersonalPlaylist() {
+  myPlaylist.innerHTML = "";
+
+  personalQueue.forEach((item, index) => {
+    const li = document.createElement("li");
+    const titleWrap = document.createElement("div");
+    titleWrap.className = "queue-title";
+
+    const playButton = document.createElement("button");
+    playButton.type = "button";
+    playButton.className = "queue-play";
+    playButton.textContent = (index + 1) + ". " + item.title;
+    playButton.setAttribute("aria-label", "Riproduci " + item.title);
+    playButton.addEventListener("click", () => playQueueItem(item.id));
+    titleWrap.appendChild(playButton);
+
+    const actions = document.createElement("div");
+    actions.className = "queue-buttons";
+
+    const up = document.createElement("button");
+    up.type = "button";
+    up.className = "queue-action";
+    up.textContent = "↑";
+    up.title = "Sposta in alto";
+    up.setAttribute("aria-label", "Sposta " + item.title + " in alto");
+    up.disabled = index === 0;
+    up.addEventListener("click", () => moveQueueItem(item.id, -1));
+
+    const down = document.createElement("button");
+    down.type = "button";
+    down.className = "queue-action";
+    down.textContent = "↓";
+    down.title = "Sposta in basso";
+    down.setAttribute("aria-label", "Sposta " + item.title + " in basso");
+    down.disabled = index === personalQueue.length - 1;
+    down.addEventListener("click", () => moveQueueItem(item.id, 1));
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "queue-action";
+    remove.textContent = "Rimuovi";
+    remove.addEventListener("click", () => removeFromQueue(item.id));
+
+    actions.append(up, down, remove);
+    li.append(titleWrap, actions);
+    myPlaylist.appendChild(li);
+  });
+
+  queueCount.textContent = personalQueue.length +
+    (personalQueue.length === 1 ? " brano" : " brani");
+  queueEmpty.hidden = personalQueue.length > 0;
 }
 
 async function loadSongs() {
@@ -612,15 +765,11 @@ async function loadSongs() {
     const files = await response.json();
 
     songs = files
-      .filter(file =>
-        file.type === "file" && /\.mp3$/i.test(file.name)
-      )
-      .sort((a, b) =>
-        a.name.localeCompare(b.name, "it", {
-          numeric: true,
-          sensitivity: "base"
-        })
-      )
+      .filter(file => file.type === "file" && /\.mp3$/i.test(file.name))
+      .sort((a, b) => a.name.localeCompare(b.name, "it", {
+        numeric: true,
+        sensitivity: "base"
+      }))
       .map(file => ({
         filename: file.name,
         title: prettyName(file.name),
@@ -628,24 +777,35 @@ async function loadSongs() {
       }));
 
     renderPlaylist();
+    renderPersonalPlaylist();
 
     status.textContent = songs.length
-      ? "Scegli un brano e premi Play. Buon ascolto!"
+      ? "Scegli un brano per ascoltarlo oppure premi «Aggiungi» per creare la tua playlist."
       : "Non ho trovato file MP3 nella cartella principale del progetto.";
   } catch (error) {
     count.textContent = "";
-    status.textContent =
-      "Non riesco a caricare la lista. Riprova tra qualche istante.";
+    status.textContent = "Non riesco a caricare la lista. Riprova tra qualche istante.";
     console.error(error);
   }
 }
 
 audio.addEventListener("ended", () => {
+  if (currentQueueId !== null) {
+    const index = personalQueue.findIndex(item => item.id === currentQueueId);
+
+    if (index >= 0 && index + 1 < personalQueue.length) {
+      playQueueItem(personalQueue[index + 1].id);
+      return;
+    }
+  }
+
   if (currentSong >= 0 && currentSong + 1 < songs.length) {
     playSong(currentSong + 1);
   }
 });
 
+loadSavedQueue();
+renderPersonalPlaylist();
 loadSongs();
 </script>
 </body>
