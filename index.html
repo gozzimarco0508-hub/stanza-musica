@@ -795,8 +795,8 @@ audio.addEventListener("ended", () => {
 
     if (index >= 0 && index + 1 < personalQueue.length) {
       playQueueItem(personalQueue[index + 1].id);
-      return;
     }
+    return;
   }
 
   if (currentSong >= 0 && currentSong + 1 < songs.length) {
