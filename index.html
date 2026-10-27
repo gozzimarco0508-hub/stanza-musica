@@ -8,7 +8,7 @@
 
 <style>
 :root {
-  --oro: #d8b66c;
+  --oro: #d8b66c;ok maya 
   --oro-chiaro: #f5dfa0;
   --nero: #090909;
   --pannello: #12110f;
@@ -334,7 +334,11 @@ audio {
   border-radius: 4px;
   background: #100f0c;
 }
-
+  
+#my-playlist li.active {
+  border-color: var(--oro);
+  background: #282114;
+}
 .queue-title {
   flex: 1;
   min-width: 0;
@@ -698,13 +702,16 @@ function renderPlaylist() {
   count.textContent = songs.length + (songs.length === 1 ? " brano" : " brani");
 }
 
-function renderPersonalPlaylist() {
+  function renderPersonalPlaylist() {
   myPlaylist.innerHTML = "";
 
   personalQueue.forEach((item, index) => {
     const li = document.createElement("li");
+    if (item.id === currentQueueId) {
+  li.classList.add("active");
+}
     const titleWrap = document.createElement("div");
-    titleWrap.className = "queue-title";
+  titleWrap.className = "queue-title";
 
     const playButton = document.createElement("button");
     playButton.type = "button";
