@@ -514,19 +514,47 @@ footer {
           <h1>La stanza<br>della musica</h1>
           <p class="subtitle">Siediti, scegli, ascolta 🎵</p>
 
-          <div class="gold-rule"></div>
+      
 
-          <section class="player">
-            <div class="now-label">In ascolto</div>
-            <div id="now">Scegli un brano dalla lista</div>
-            <audio id="audio" controls preload="metadata">
-              Il tuo browser non supporta il lettore audio.
-            </audio>
-            <p class="player-note">
-              Ogni canzone custodisce un ricordo.
-              Scegli la tua e lasciati accompagnare dalla musica.
-            </p>
-          </section>
+
+<div class="music-categories">
+
+  <div class="music-category">
+    <img src="musica-internazionale.png" alt="Musica internazionale">
+    <p>Musica internazionale</p>
+  </div>
+
+  <div class="music-category">
+    <img src="musica-italiana.png" alt="Musica italiana">
+    <p>Musica italiana</p>
+  </div>
+
+  <div class="music-category">
+    <img src="musica-70-80-90.png" alt="Musica anni 70, 80 e 90">
+    <p>Musica 70-80-90</p>
+  </div>
+
+  <div class="music-category">
+    <img src="musica-2000-a-oggi.png" alt="Musica dal 2000 a oggi">
+    <p>Musica 2000 a oggi</p>
+  </div>
+
+</div>
+
+<div class="gold-rule"></div>
+
+<section class="player">
+  <div class="now-label">In ascolto</div>
+  <div id="now">Scegli un brano dalla lista</div>
+  <audio id="audio" controls preload="metadata">
+    Il tuo browser non supporta il lettore audio.
+  </audio>
+  <p class="player-note">
+    Ogni canzone custodisce un ricordo.
+    Scegli la tua e lasciati accompagnare dalla musica.
+  </p>
+</section>
+ 
 
           <div class="playlist-heading">
             <h2>I brani della stanza</h2>
@@ -843,6 +871,7 @@ async function loadSongs() {
 audio.addEventListener("ended", () => {
   if (currentQueueId !== null) {
     const index = personalQueue.findIndex(item => item.id === currentQueueId);
+    
 
     if (index >= 0 && index + 1 < personalQueue.length) {
       playQueueItem(personalQueue[index + 1].id);
