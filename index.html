@@ -1,7 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="it">
-<head>
+<html lang="it"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La stanza della musica — Mr Gos</title>
@@ -500,6 +497,55 @@ footer {
     font-size: 13px;
   }
 }
+
+/* STRUMENTI TEMPORANEI PER CATALOGARE I BRANI */
+.organizer-launch-wrap { text-align: center; margin: 16px 0 10px; }
+.organizer-launch {
+  padding: 11px 16px;
+  border: 1px solid var(--oro);
+  border-radius: 4px;
+  color: var(--oro-chiaro);
+  background: #211a0d;
+  font-weight: bold;
+  cursor: pointer;
+}
+.organizer-launch:hover { background: #382b15; }
+.organizer-panel {
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid var(--oro);
+  border-radius: 5px;
+  background: #15120c;
+  color: var(--testo);
+  line-height: 1.5;
+}
+.organizer-panel button {
+  margin-top: 8px;
+  padding: 10px 13px;
+  border: 1px solid var(--oro);
+  border-radius: 4px;
+  color: var(--oro-chiaro);
+  background: #090909;
+  cursor: pointer;
+}
+.organizer-panel small { color: var(--secondario); }
+#playlist li.song-unassigned {
+  border: 1px solid #d94b4b;
+  border-radius: 5px;
+  padding: 3px;
+}
+.song-organizer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px 8px;
+  color: var(--secondario);
+  font: 12px Arial, sans-serif;
+}
+.song-organizer label { display: inline-flex; align-items: center; gap: 4px; }
+.song-organizer input { accent-color: var(--oro); }
+
 </style>
 </head>
 
@@ -517,14 +563,14 @@ footer {
 
         <section class="left-gallery">
           <section class="artwork" aria-label="Emblema del centauro">
-            <img class="centaur-image" src="vagabondo%20centauro.png" alt="Centauro dorato con arco">
+            <img class="centaur-image" src="https://gozzimarco0508-hub.github.io/stanza-musica/vagabondo%20centauro.png" alt="Centauro dorato con arco">
         <div class="signature">
   <small>La mia musica, i miei ricordi</small>
 </div>
           </section>
 
           <div class="vespa-artwork">
-            <img src="vespa.png" alt="La Vespa di Mr Gos" class="vespa-image">
+            <img src="https://gozzimarco0508-hub.github.io/stanza-musica/vespa.png" alt="La Vespa di Mr Gos" class="vespa-image">
           </div>
         </section>
 
@@ -539,23 +585,23 @@ footer {
 <div class="music-categories" aria-label="Filtra i brani per categoria">
 
   <button type="button" class="music-category" data-category="international" aria-pressed="false">
-    <img src="musica-internazionale.png" alt="">
+    <img src="https://gozzimarco0508-hub.github.io/stanza-musica/musica-internazionale.png" alt="">
     <p>Musica internazionale</p>
   </button>
 
   <button type="button" class="music-category" data-category="italian" aria-pressed="false">
-    <img src="musica-italiana.png" alt="">
+    <img src="https://gozzimarco0508-hub.github.io/stanza-musica/musica-italiana.png" alt="">
     <p>Musica italiana</p>
   </button>
 
-  <button type="button" class="music-category" data-category="classic" aria-pressed="false">
-    <img src="musica-70-80-90.png" alt="">
+  <button type="button" class="music-category active" data-category="classic" aria-pressed="true">
+    <img src="https://gozzimarco0508-hub.github.io/stanza-musica/musica-70-80-90.png" alt="">
     <p>Musica 70-80-90</p>
   </button>
 
 </div>
 <div class="all-songs-wrap">
-  <button type="button" id="show-all-songs" class="all-songs-button" aria-pressed="true">Tutti i brani</button>
+  <button type="button" id="show-all-songs" class="all-songs-button" aria-pressed="false">Tutti i brani</button>
 </div>
 
 <div class="gold-rule"></div>
@@ -563,7 +609,7 @@ footer {
 <section class="player">
   <div class="now-label">In ascolto</div>
   <div id="now">Scegli un brano dalla lista</div>
-  <audio id="audio" controls preload="metadata">
+  <audio id="audio" controls="" preload="metadata">
     Il tuo browser non supporta il lettore audio.
   </audio>
   <p class="player-note">
@@ -571,26 +617,30 @@ footer {
     Scegli la tua e lasciati accompagnare dalla musica.
   </p>
 </section>
- 
+<section id="organizer-panel" class="organizer-panel">
+            <strong>Modalità organizzazione</strong>
+            <p>Seleziona una o più categorie per ogni brano. Il bordo rosso indica i brani ancora senza categoria.</p>
+            <small>Quando hai finito, esporta il nuovo HTML e caricalo su GitHub al posto di index.html.</small>
+            <br><button id="export-catalog">Salva catalogazione nel nuovo file HTML</button>
+            <p id="organizer-message" aria-live="polite"></p>
+          </section>
 
           <div class="playlist-heading">
             <h2>I brani della stanza</h2>
-            <span id="count">Caricamento…</span>
+            <span id="count">5 brani</span>
           </div>
 
-          <ol id="playlist"></ol>
+          <ol id="playlist"><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 01 Sultans Of Swing"><span class="song-number">01</span><span class="song-title">01 Sultans Of Swing</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 01 Sultans Of Swing alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Honesty"><span class="song-number">02</span><span class="song-title">Honesty</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Honesty alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta La cura"><span class="song-number">03</span><span class="song-title">La cura</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi La cura alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Man in the Mirror"><span class="song-number">04</span><span class="song-title">Man in the Mirror</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Man in the Mirror alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Musica È"><span class="song-number">05</span><span class="song-title">Musica È</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Musica È alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li></ol>
 
-          <div id="status" aria-live="polite">
-            Sto cercando i brani disponibili…
-          </div>
+          <div id="status" aria-live="polite">Aggiunto alla tua playlist: (01) Jovanotti - Baciami ancora</div>
 
           <section class="personal-playlist" aria-label="La mia playlist personale">
             <div class="playlist-heading">
               <h2>La mia playlist</h2>
-              <span id="queue-count">0 brani</span>
+              <span id="queue-count">1 brano</span>
             </div>
-            <ol id="my-playlist"></ol>
-            <p id="queue-empty">La tua playlist è vuota. Premi «Aggiungi» accanto ai brani che vuoi ascoltare.</p>
+            <ol id="my-playlist"><li><div class="queue-title"><button type="button" class="queue-play" aria-label="Riproduci (01) Jovanotti - Baciami ancora">1. (01) Jovanotti - Baciami ancora</button></div><div class="queue-buttons"><button type="button" class="queue-action" title="Sposta in alto" aria-label="Sposta (01) Jovanotti - Baciami ancora in alto" disabled="">↑</button><button type="button" class="queue-action" title="Sposta in basso" aria-label="Sposta (01) Jovanotti - Baciami ancora in basso" disabled="">↓</button><button type="button" class="queue-action">Rimuovi</button></div></li></ol>
+            <p id="queue-empty" hidden="">La tua playlist è vuota. Premi «Aggiungi» accanto ai brani che vuoi ascoltare.</p>
           </section>
         </section>
       </main>
@@ -605,6 +655,8 @@ const OWNER = "gozzimarco0508-hub";
 const REPO = "stanza-musica";
 const BRANCH = "main";
 const QUEUE_STORAGE_KEY = "mrGosMusicPersonalPlaylistV1";
+// Metti true solo quando vuoi catalogare i brani; dopo l’esportazione torna automaticamente a false.
+const ORGANIZZAZIONE_ATTIVA = false;
 
 const audio = document.getElementById("audio");
 const now = document.getElementById("now");
@@ -625,17 +677,124 @@ let activeCategory = "all";
 // Le categorie sono assegnate ai nomi esatti dei file MP3.
 // Un brano può appartenere a più categorie.
 const SONG_CATEGORIES = {
-  "02 hello.mp3": ["italian"],
-  "04 corner of the earth.mp3": ["international"],
-  "04 sorry seems to be the hardest word.mp3": ["international"],
-  "1-01 24k magic.mp3": ["international"],
-  "honesty.mp3": ["international", "classic"],
-  "la cura.mp3": ["italian", "classic"],
-  "leave the door open.mp3": ["international"],
-  "man in the mirror.mp3": ["international", "classic"],
-  "musica è.mp3": ["italian", "classic"],
-  "occidentali's karma.mp3": ["italian"]
+  "02 hello.mp3": [
+    "italian"
+  ],
+  "04 corner of the earth.mp3": [
+    "international"
+  ],
+  "04 sorry seems to be the hardest word.mp3": [
+    "international"
+  ],
+  "1-01 24k magic.mp3": [
+    "international"
+  ],
+  "honesty.mp3": [
+    "international",
+    "classic"
+  ],
+  "la cura.mp3": [
+    "italian",
+    "classic"
+  ],
+  "leave the door open.mp3": [
+    "international"
+  ],
+  "man in the mirror.mp3": [
+    "international",
+    "classic"
+  ],
+  "musica è.mp3": [
+    "italian",
+    "classic"
+  ],
+  "occidentali's karma.mp3": [
+    "italian"
+  ],
+  "(01) jovanotti - baciami ancora.mp3": [
+    "italian"
+  ],
+  "1-01 potremmo ritornare.mp3": [
+    "italian"
+  ],
+  "1-01 sultans of swing.mp3": [
+    "international",
+    "classic"
+  ]
 };
+
+const CATEGORIE_DISPONIBILI = [
+  ["international", "Internazionale"],
+  ["italian", "Italiana"],
+  ["classic", "Classici 70-80-90"]
+];
+
+function categorieDelBrano(filename) {
+  return SONG_CATEGORIES[filename.toLocaleLowerCase("it")] || [];
+}
+
+function mostraOrganizzatore() {
+  const panel = document.getElementById("organizer-panel");
+  if (panel) panel.hidden = !ORGANIZZAZIONE_ATTIVA;
+}
+
+function aggiornaCategoriaBrano(filename, category, checked) {
+  const key = filename.toLocaleLowerCase("it");
+  const current = [...(SONG_CATEGORIES[key] || [])];
+  const next = checked
+    ? [...new Set([...current, category])]
+    : current.filter(item => item !== category);
+  if (next.length) SONG_CATEGORIES[key] = next;
+  else delete SONG_CATEGORIES[key];
+  renderPlaylist();
+}
+
+function esportaCatalogazione() {
+  const htmlAttuale = document.documentElement.outerHTML;
+  const mappaNuova = JSON.stringify(SONG_CATEGORIES, null, 2);
+  const mappaRegex = /const SONG_CATEGORIES = \{[\s\S]*?\n\};/;
+  if (!mappaRegex.test(htmlAttuale)) {
+    document.getElementById("organizer-message").textContent =
+      "Non riesco a preparare il file. Non è stata modificata la pagina online.";
+    return;
+  }
+  let nuovoHtml = htmlAttuale.replace(
+    mappaRegex,
+    "const SONG_CATEGORIES = " + mappaNuova + ";"
+  );
+  nuovoHtml = nuovoHtml.replace(
+    /^const ORGANIZZAZIONE_ATTIVA = true;$/m,
+    "const ORGANIZZAZIONE_ATTIVA = false;"
+  );
+  nuovoHtml = nuovoHtml.replace(
+    /\s*<div class="organizer-launch-wrap">[\s\S]*?<\/div>\s*/,
+    "\n"
+  );
+  const blob = new Blob([nuovoHtml], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "index.html";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  document.getElementById("organizer-message").textContent =
+    "File index.html preparato. Caricalo su GitHub per rendere la catalogazione visibile a tutti.";
+}
+
+document.getElementById("export-catalog").addEventListener("click", esportaCatalogazione);
+const organizerLaunch = document.getElementById("organizer-launch");
+if (organizerLaunch) {
+  organizerLaunch.addEventListener("click", () => {
+    const panel = document.getElementById("organizer-panel");
+    panel.hidden = false;
+    panel.scrollIntoView({ behavior: "smooth", block: "center" });
+    document.getElementById("organizer-message").textContent =
+      "Modalità organizzazione attiva. Seleziona le categorie sotto ogni brano.";
+  });
+}
+mostraOrganizzatore();
 
 function setCategory(category) {
   activeCategory = category;
@@ -781,12 +940,14 @@ function renderPlaylist() {
     .map((song, index) => ({ song, index }))
     .filter(({ song }) => {
       if (activeCategory === "all") return true;
-      const categories = SONG_CATEGORIES[song.filename.toLocaleLowerCase("it")] || [];
+      const categories = categorieDelBrano(song.filename);
       return categories.includes(activeCategory);
     });
 
   visibleSongs.forEach(({ song, index }, visibleIndex) => {
     const li = document.createElement("li");
+    const categorie = categorieDelBrano(song.filename);
+    if (ORGANIZZAZIONE_ATTIVA && categorie.length === 0) li.classList.add("song-unassigned");
     const row = document.createElement("div");
 
     row.style.display = "flex";
@@ -829,6 +990,30 @@ function renderPlaylist() {
     actions.appendChild(addButton);
     row.append(button, actions);
     li.appendChild(row);
+
+    if (ORGANIZZAZIONE_ATTIVA) {
+      const editor = document.createElement("div");
+      editor.className = "song-organizer";
+      const label = document.createElement("span");
+      label.textContent = "Categorie:";
+      editor.appendChild(label);
+
+      CATEGORIE_DISPONIBILI.forEach(([category, labelText]) => {
+        const labelElement = document.createElement("label");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = categorie.includes(category);
+        checkbox.addEventListener("change", () => {
+          aggiornaCategoriaBrano(song.filename, category, checkbox.checked);
+        });
+        const text = document.createElement("span");
+        text.textContent = labelText;
+        labelElement.append(checkbox, text);
+        editor.appendChild(labelElement);
+      });
+      li.appendChild(editor);
+    }
+
     playlist.appendChild(li);
   });
 
@@ -864,9 +1049,7 @@ function renderPlaylist() {
     titleWrap.appendChild(playButton);
 
     const actions = document.createElement("div");
-    actions.className = "queue-buttons";
-
-    const up = document.createElement("button");
+    actions.className = "queue-buttons";const up = document.createElement("button");
     up.type = "button";
     up.className = "queue-action";
     up.textContent = "↑";
@@ -958,5 +1141,5 @@ setCategory("all");
 renderPersonalPlaylist();
 loadSongs();
 </script>
-</body>
-</html>
+
+</body></html>
