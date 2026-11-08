@@ -546,6 +546,19 @@ footer {
 .song-organizer label { display: inline-flex; align-items: center; gap: 4px; }
 .song-organizer input { accent-color: var(--oro); }
 
+
+.personal-playlist-tools { display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 12px; }
+.personal-playlist-tools input, .personal-playlist-tools select {
+  min-width:0; flex:1 1 150px; padding:9px; border:1px solid #6e562d;
+  border-radius:4px; color:var(--testo); background:#100f0c;
+}
+.personal-playlist-tools button {
+  padding:9px 11px; border:1px solid #6e562d; border-radius:4px;
+  color:var(--oro-chiaro); background:#1a1710; cursor:pointer;
+}
+.personal-playlist-tools button:hover { border-color:var(--oro-chiaro); background:#302515; }
+.playlist-tools-note { color:var(--secondario); font-size:12px; line-height:1.5; margin:0 0 12px; }
+
 </style>
 </head>
 
@@ -635,13 +648,24 @@ footer {
 
           <div id="status" aria-live="polite">Scegli un brano per ascoltarlo oppure premi «Aggiungi» per creare la tua playlist.</div>
 
-          <section class="personal-playlist" aria-label="La mia playlist personale">
+          <section class="personal-playlist" aria-label="Le mie playlist personali">
             <div class="playlist-heading">
-              <h2>La mia playlist</h2>
+              <h2 id="personal-playlist-title">La mia playlist</h2>
               <span id="queue-count">0 brani</span>
             </div>
+            <div class="personal-playlist-tools">
+              <input id="new-playlist-name" type="text" maxlength="60" placeholder="Nome della nuova playlist" aria-label="Nome della nuova playlist">
+              <button type="button" id="create-playlist">＋ Crea playlist</button>
+            </div>
+            <div class="personal-playlist-tools">
+              <select id="playlist-selector" aria-label="Scegli una playlist"></select>
+              <button type="button" id="rename-playlist">Rinomina</button>
+              <button type="button" id="delete-playlist">Elimina</button>
+              <button type="button" id="shuffle-playlist">🔀 Casuale</button>
+            </div>
+            <p class="playlist-tools-note">Le playlist si salvano in questo browser e su questo dispositivo. Non vengono sincronizzate automaticamente con gli altri dispositivi.</p>
             <ol id="my-playlist"></ol>
-            <p id="queue-empty">La tua playlist è vuota. Premi «Aggiungi» accanto ai brani che vuoi ascoltare.</p>
+            <p id="queue-empty">Questa playlist è vuota. Premi «＋ Aggiungi» accanto ai brani che vuoi inserire.</p>
           </section>
         </section>
       </main>
@@ -667,9 +691,15 @@ const status = document.getElementById("status");
 const myPlaylist = document.getElementById("my-playlist");
 const queueCount = document.getElementById("queue-count");
 const queueEmpty = document.getElementById("queue-empty");
+const playlistSelector = document.getElementById("playlist-selector");
+const newPlaylistName = document.getElementById("new-playlist-name");
+const personalPlaylistTitle = document.getElementById("personal-playlist-title");
+const PLAYLISTS_STORAGE_KEY = "mrGosMusicNamedPlaylistsV1";
 
 let songs = [];
 let personalQueue = [];
+let userPlaylists = [];
+let activePlaylistId = "playlist-1";
 let currentSong = -1;
 let currentQueueId = null;
 let nextQueueId = 1;
@@ -935,29 +965,151 @@ function prettyName(filename) {
 
 function saveQueue() {
   try {
+    const active = userPlaylists.find(item => item.id === activePlaylistId);
+    if (active) active.items = personalQueue;
+    localStorage.setItem(PLAYLISTS_STORAGE_KEY, JSON.stringify(userPlaylists));
+    // Mantiene una copia compatibile con la vecchia versione del lettore.
     localStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(personalQueue));
   } catch (error) {
-    console.warn("Non riesco a salvare la playlist in questo browser.", error);
+    console.warn("Non riesco a salvare le playlist in questo browser.", error);
   }
 }
 
 function loadSavedQueue() {
   try {
-    const saved = JSON.parse(localStorage.getItem(QUEUE_STORAGE_KEY) || "[]");
-    if (Array.isArray(saved)) {
-      personalQueue = saved
+    const savedPlaylists = JSON.parse(localStorage.getItem(PLAYLISTS_STORAGE_KEY) || "null");
+    if (Array.isArray(savedPlaylists) && savedPlaylists.length) {
+      userPlaylists = savedPlaylists
+        .filter(p => p && typeof p.id === "string" && typeof p.name === "string" && Array.isArray(p.items))
+        .map(p => ({
+          id: p.id,
+          name: p.name.slice(0, 60) || "La mia playlist",
+          items: p.items.filter(item => item && typeof item.filename === "string")
+            .map(item => ({
+              id: Number.isInteger(item.id) ? item.id : nextQueueId++,
+              filename: item.filename,
+              title: typeof item.title === "string" ? item.title : prettyName(item.filename)
+            }))
+        }));
+      if (!userPlaylists.length) userPlaylists = [];
+    }
+    if (!userPlaylists.length) {
+      const oldQueue = JSON.parse(localStorage.getItem(QUEUE_STORAGE_KEY) || "[]");
+      const items = Array.isArray(oldQueue) ? oldQueue
         .filter(item => item && typeof item.filename === "string")
         .map(item => ({
           id: Number.isInteger(item.id) ? item.id : nextQueueId++,
           filename: item.filename,
           title: typeof item.title === "string" ? item.title : prettyName(item.filename)
-        }));
-      nextQueueId = Math.max(1, ...personalQueue.map(item => item.id + 1));
+        })) : [];
+      userPlaylists = [{ id: "playlist-1", name: "La mia playlist", items }];
     }
+    activePlaylistId = userPlaylists[0].id;
+    personalQueue = userPlaylists[0].items;
+    nextQueueId = Math.max(1, ...userPlaylists.flatMap(p => p.items).map(item => item.id + 1));
   } catch (error) {
-    personalQueue = [];
+    userPlaylists = [{ id: "playlist-1", name: "La mia playlist", items: [] }];
+    activePlaylistId = "playlist-1";
+    personalQueue = userPlaylists[0].items;
   }
+  renderPlaylistSelector();
 }
+
+function renderPlaylistSelector() {
+  if (!playlistSelector) return;
+  playlistSelector.innerHTML = "";
+  userPlaylists.forEach(item => {
+    const option = document.createElement("option");
+    option.value = item.id;
+    option.textContent = item.name;
+    playlistSelector.appendChild(option);
+  });
+  playlistSelector.value = activePlaylistId;
+  const active = userPlaylists.find(item => item.id === activePlaylistId);
+  if (active) personalPlaylistTitle.textContent = active.name;
+}
+
+function activatePlaylist(id) {
+  const target = userPlaylists.find(item => item.id === id);
+  if (!target) return;
+  const currentItemStillExists = currentQueueId !== null && target.items.some(item => item.id === currentQueueId);
+  activePlaylistId = target.id;
+  personalQueue = target.items;
+  if (!currentItemStillExists) currentQueueId = null;
+  renderPlaylistSelector();
+  renderPersonalPlaylist();
+  status.textContent = "Playlist selezionata: " + target.name;
+}
+
+document.getElementById("create-playlist").addEventListener("click", () => {
+  const name = newPlaylistName.value.trim();
+  if (!name) {
+    status.textContent = "Scrivi prima il nome della nuova playlist.";
+    newPlaylistName.focus();
+    return;
+  }
+  const id = "playlist-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  const created = { id, name: name.slice(0, 60), items: [] };
+  userPlaylists.push(created);
+  activePlaylistId = id;
+  personalQueue = created.items;
+  newPlaylistName.value = "";
+  saveQueue();
+  renderPlaylistSelector();
+  renderPersonalPlaylist();
+  status.textContent = "Creata la playlist: " + created.name;
+});
+newPlaylistName.addEventListener("keydown", event => {
+  if (event.key === "Enter") document.getElementById("create-playlist").click();
+});
+playlistSelector.addEventListener("change", () => activatePlaylist(playlistSelector.value));
+
+document.getElementById("rename-playlist").addEventListener("click", () => {
+  const active = userPlaylists.find(item => item.id === activePlaylistId);
+  if (!active) return;
+  const name = newPlaylistName.value.trim();
+  if (!name) {
+    status.textContent = "Scrivi il nuovo nome nel campo qui sopra, poi premi «Rinomina».";
+    newPlaylistName.focus();
+    return;
+  }
+  active.name = name.slice(0, 60);
+  newPlaylistName.value = "";
+  saveQueue();
+  renderPlaylistSelector();
+  status.textContent = "Playlist rinominata: " + active.name;
+});
+
+document.getElementById("delete-playlist").addEventListener("click", () => {
+  if (userPlaylists.length <= 1) {
+    status.textContent = "Deve rimanere almeno una playlist. Puoi svuotarla rimuovendo i brani.";
+    return;
+  }
+  const active = userPlaylists.find(item => item.id === activePlaylistId);
+  if (!active || !confirm("Vuoi eliminare la playlist «" + active.name + "»? I file MP3 non verranno eliminati.")) return;
+  userPlaylists = userPlaylists.filter(item => item.id !== activePlaylistId);
+  activePlaylistId = userPlaylists[0].id;
+  personalQueue = userPlaylists[0].items;
+  currentQueueId = null;
+  saveQueue();
+  renderPlaylistSelector();
+  renderPersonalPlaylist();
+  status.textContent = "Playlist eliminata. Le canzoni originali sono rimaste al loro posto.";
+});
+
+document.getElementById("shuffle-playlist").addEventListener("click", () => {
+  if (personalQueue.length < 2) {
+    status.textContent = "Aggiungi almeno due brani alla playlist per mescolarli.";
+    return;
+  }
+  for (let i = personalQueue.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [personalQueue[i], personalQueue[j]] = [personalQueue[j], personalQueue[i]];
+  }
+  saveQueue();
+  renderPersonalPlaylist();
+  status.textContent = "Brani mescolati in ordine casuale nella playlist selezionata.";
+});
 
 function findSongByFilename(filename) {
   return songs.find(song => song.filename === filename);
