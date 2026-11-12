@@ -618,6 +618,7 @@ footer {
 </div>
 <div class="all-songs-wrap">
   <button type="button" id="show-all-songs" class="all-songs-button" aria-pressed="false">Tutti i brani</button>
+  <button type="button" id="shuffle-songs" class="all-songs-button" aria-pressed="false">🔀 Casuale</button>
 </div>
 
 <div class="gold-rule"></div>
@@ -709,6 +710,13 @@ let currentSong = -1;
 let currentQueueId = null;
 let nextQueueId = 1;
 let activeCategory = "all";
+let shuffleMode = false;
+// Sacchetti casuali: ogni brano viene scelto una volta per ciclo.
+let shuffleBag = [];
+let shuffleBagKey = "";
+let lastShuffleChoice = null;
+// Indica quale elenco deve governare il brano successivo: lista/categoria o playlist personale.
+let playbackContext = "songs";
 
 // Le categorie sono assegnate ai nomi esatti dei file MP3.
 // Un brano può appartenere a più categorie.
@@ -953,6 +961,8 @@ function aggiornaPulsanteElenco() {
 
 function setCategory(category) {
   activeCategory = category;
+  resetShuffleBag();
+  playbackContext = "songs";
   allSongsPanel.hidden = false;
   document.querySelectorAll(".music-category").forEach(button => {
     const selected = button.dataset.category === category;
@@ -973,6 +983,8 @@ allSongsButton.addEventListener("click", () => {
       button.setAttribute("aria-pressed", "false");
     });
     activeCategory = "all";
+    resetShuffleBag();
+    playbackContext = "songs";
     allSongsPanel.hidden = false;
     renderPlaylist();
   } else {
@@ -1063,6 +1075,7 @@ function activatePlaylist(id) {
   const currentItemStillExists = currentQueueId !== null && target.items.some(item => item.id === currentQueueId);
   activePlaylistId = target.id;
   personalQueue = target.items;
+  playbackContext = "queue";
   if (!currentItemStillExists) currentQueueId = null;
   renderPlaylistSelector();
   renderPersonalPlaylist();
@@ -1081,6 +1094,7 @@ document.getElementById("create-playlist").addEventListener("click", () => {
   userPlaylists.push(created);
   activePlaylistId = id;
   personalQueue = created.items;
+  playbackContext = "queue";
   newPlaylistName.value = "";
   saveQueue();
   renderPlaylistSelector();
@@ -1118,6 +1132,7 @@ document.getElementById("delete-playlist").addEventListener("click", () => {
   userPlaylists = userPlaylists.filter(item => item.id !== activePlaylistId);
   activePlaylistId = userPlaylists[0].id;
   personalQueue = userPlaylists[0].items;
+  playbackContext = "queue";
   currentQueueId = null;
   saveQueue();
   renderPlaylistSelector();
@@ -1125,19 +1140,104 @@ document.getElementById("delete-playlist").addEventListener("click", () => {
   status.textContent = "Playlist eliminata. Le canzoni originali sono rimaste al loro posto.";
 });
 
-document.getElementById("shuffle-playlist").addEventListener("click", () => {
-  if (personalQueue.length < 2) {
-    status.textContent = "Aggiungi almeno due brani alla playlist per mescolarli.";
+const shuffleButton = document.getElementById("shuffle-playlist");
+const shuffleSongsButton = document.getElementById("shuffle-songs");
+
+function currentSongPool() {
+  return songs
+    .map((song, index) => ({ song, index }))
+    .filter(({ song }) => activeCategory === "all" || categorieDelBrano(song.filename).includes(activeCategory));
+}
+
+function resetShuffleBag() {
+  shuffleBag = [];
+  shuffleBagKey = "";
+  lastShuffleChoice = null;
+}
+
+function shuffleArray(items) {
+  const result = items.slice();
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function nextFromShuffleBag(type) {
+  const pool = type === "queue"
+    ? personalQueue.filter(item => findSongByFilename(item.filename)).map(item => item.id)
+    : currentSongPool().map(item => item.index);
+  const key = type + ":" + (type === "queue" ? activePlaylistId : activeCategory) + ":" + pool.join("|");
+
+  if (key !== shuffleBagKey || shuffleBag.length === 0) {
+    shuffleBagKey = key;
+    shuffleBag = shuffleArray(pool);
+    // Evita, se possibile, di ricominciare il nuovo ciclo con lo stesso brano appena ascoltato.
+    if (shuffleBag.length > 1 && shuffleBag[0] === lastShuffleChoice) {
+      [shuffleBag[0], shuffleBag[1]] = [shuffleBag[1], shuffleBag[0]];
+    }
+  }
+
+  if (!shuffleBag.length) return null;
+  const chosen = shuffleBag.shift();
+  lastShuffleChoice = chosen;
+  return chosen;
+}
+
+function chooseRandomQueueItem() {
+  const chosenId = nextFromShuffleBag("queue");
+  if (chosenId === null) return false;
+  playQueueItem(chosenId);
+  return true;
+}
+
+function chooseRandomSong() {
+  const chosenIndex = nextFromShuffleBag("songs");
+  if (chosenIndex === null) return false;
+  playSong(chosenIndex);
+  return true;
+}
+
+function updateShuffleButton() {
+  const label = shuffleMode ? "🔀 Casuale attivo" : "🔀 Casuale";
+  [shuffleButton, shuffleSongsButton].forEach(button => {
+    if (!button) return;
+    button.textContent = label;
+    button.setAttribute("aria-pressed", String(shuffleMode));
+    button.classList.toggle("active", shuffleMode);
+  });
+}
+
+function toggleShuffle() {
+  const available = playbackContext === "queue"
+    ? personalQueue.filter(item => findSongByFilename(item.filename)).length
+    : currentSongPool().length;
+
+  if (available < 2) {
+    status.textContent = playbackContext === "queue"
+      ? "Aggiungi almeno due brani disponibili alla playlist per usare la riproduzione casuale."
+      : "Servono almeno due brani disponibili nell'elenco o nella categoria scelta per usare Casuale.";
     return;
   }
-  for (let i = personalQueue.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [personalQueue[i], personalQueue[j]] = [personalQueue[j], personalQueue[i]];
+
+  shuffleMode = !shuffleMode;
+  resetShuffleBag();
+  updateShuffleButton();
+
+  if (shuffleMode) {
+    status.textContent = playbackContext === "queue"
+      ? "Casuale attivo: sceglierò soltanto i brani della playlist personale."
+      : "Casuale attivo: sceglierò soltanto i brani dell'elenco o della categoria selezionata.";
+    if (playbackContext === "queue") chooseRandomQueueItem(false);
+    else chooseRandomSong(false);
+  } else {
+    status.textContent = "Riproduzione casuale disattivata.";
   }
-  saveQueue();
-  renderPersonalPlaylist();
-  status.textContent = "Brani mescolati in ordine casuale nella playlist selezionata.";
-});
+}
+
+shuffleButton.addEventListener("click", toggleShuffle);
+shuffleSongsButton.addEventListener("click", toggleShuffle);
 
 function findSongByFilename(filename) {
   return songs.find(song => song.filename === filename);
@@ -1147,6 +1247,8 @@ function playSong(index) {
   if (index < 0 || index >= songs.length) return;
   currentSong = index;
   currentQueueId = null;
+  playbackContext = "songs";
+  if (shuffleMode && shuffleBagKey.startsWith("songs:")) shuffleBag = shuffleBag.filter(item => item !== index);
 
   const song = songs[index];
   audio.src = song.url;
@@ -1174,6 +1276,8 @@ function playQueueItem(queueId) {
 
   currentQueueId = item.id;
   currentSong = songs.indexOf(song);
+  playbackContext = "queue";
+  if (shuffleMode && shuffleBagKey.startsWith("queue:")) shuffleBag = shuffleBag.filter(id => id !== item.id);
   audio.src = song.url;
   now.textContent = item.title;
 
@@ -1411,22 +1515,37 @@ async function loadSongs() {
 }
 
 audio.addEventListener("ended", () => {
-  if (currentQueueId !== null) {
-    const index = personalQueue.findIndex(item => item.id === currentQueueId);
-    
+  if (playbackContext === "queue") {
+    if (shuffleMode) {
+      if (!chooseRandomQueueItem()) {
+        status.textContent = "Hai ascoltato tutti i brani della playlist in questo ciclo; preparo un nuovo ordine casuale.";
+      }
+      return;
+    }
 
+    const index = personalQueue.findIndex(item => item.id === currentQueueId);
     if (index >= 0 && index + 1 < personalQueue.length) {
       playQueueItem(personalQueue[index + 1].id);
     }
     return;
   }
 
-  if (currentSong >= 0 && currentSong + 1 < songs.length) {
-    playSong(currentSong + 1);
+  const pool = currentSongPool();
+  if (shuffleMode) {
+    if (!chooseRandomSong()) {
+      status.textContent = "Hai ascoltato tutti i brani di questo elenco in questo ciclo; preparo un nuovo ordine casuale.";
+    }
+    return;
+  }
+
+  const poolPosition = pool.findIndex(item => item.index === currentSong);
+  if (poolPosition >= 0 && poolPosition + 1 < pool.length) {
+    playSong(pool[poolPosition + 1].index);
   }
 });
 
 loadSavedQueue();
+updateShuffleButton();
 setCategory("all");
 renderPersonalPlaylist();
 loadSongs();
