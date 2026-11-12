@@ -218,9 +218,6 @@ audio {
   line-height: 1.6;
 }
 
-/* L’elenco completo si apre solo quando richiesto */
-#all-songs-panel[hidden] { display: none !important; }
-
 /* ELENCO DEI BRANI */
 .playlist-heading {
   display: flex;
@@ -549,19 +546,6 @@ footer {
 .song-organizer label { display: inline-flex; align-items: center; gap: 4px; }
 .song-organizer input { accent-color: var(--oro); }
 
-
-.personal-playlist-tools { display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 12px; }
-.personal-playlist-tools input, .personal-playlist-tools select {
-  min-width:0; flex:1 1 150px; padding:9px; border:1px solid #6e562d;
-  border-radius:4px; color:var(--testo); background:#100f0c;
-}
-.personal-playlist-tools button {
-  padding:9px 11px; border:1px solid #6e562d; border-radius:4px;
-  color:var(--oro-chiaro); background:#1a1710; cursor:pointer;
-}
-.personal-playlist-tools button:hover { border-color:var(--oro-chiaro); background:#302515; }
-.playlist-tools-note { color:var(--secondario); font-size:12px; line-height:1.5; margin:0 0 12px; }
-
 </style>
 </head>
 
@@ -617,16 +601,15 @@ footer {
 
 </div>
 <div class="all-songs-wrap">
-  <button type="button" id="show-all-songs" class="all-songs-button" aria-pressed="false">Tutti i brani</button>
-  <button type="button" id="shuffle-songs" class="all-songs-button" aria-pressed="false">🔀 Casuale</button>
+  <button type="button" id="show-all-songs" class="all-songs-button active" aria-pressed="true">Tutti i brani</button>
 </div>
 
 <div class="gold-rule"></div>
 
 <section class="player">
   <div class="now-label">In ascolto</div>
-  <div id="now">Come in un film feat.Emma</div>
-  <audio id="audio" controls="" preload="metadata" src="https://raw.githubusercontent.com/gozzimarco0508-hub/stanza-musica/main/01%20Come%20in%20un%20film%20feat.Emma.mp3">
+  <div id="now">La Flaca</div>
+  <audio id="audio" controls="" preload="metadata" src="https://raw.githubusercontent.com/gozzimarco0508-hub/stanza-musica/main/01%20La%20Flaca.mp3">
     Il tuo browser non supporta il lettore audio.
   </audio>
   <p class="player-note">
@@ -634,44 +617,31 @@ footer {
     Scegli la tua e lasciati accompagnare dalla musica.
   </p>
 </section>
-<section id="all-songs-panel" hidden>
 <section id="organizer-panel" class="organizer-panel">
             <strong>Modalità organizzazione</strong>
             <p>Seleziona una o più categorie per ogni brano. Il bordo rosso indica i brani ancora senza categoria.</p>
             <small>Quando hai finito, esporta il nuovo HTML e caricalo su GitHub al posto di index.html.</small>
             <br><button id="export-catalog">Esporta il lettore per GitHub (index.html)</button>
             <br><button id="export-organizer">Salva anche l’organizzatore aggiornato</button>
-            <p id="organizer-message" aria-live="polite">Organizzatore aggiornato scaricato. Per sicurezza, usa questa copia la prossima volta e conserva anche il file originale.</p>
+            <p id="organizer-message" aria-live="polite">File index.html preparato con le categorie aggiornate. Caricalo su GitHub solo quando vuoi aggiornare il lettore online.</p>
           </section>
 
           <div class="playlist-heading">
             <h2>I brani della stanza</h2>
-            <span id="count">29 brani</span>
+            <span id="count">34 brani</span>
           </div>
 
-          <ol id="playlist"><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta (01) Jovanotti - Baciami ancora"><span class="song-number">01</span><span class="song-title">(01) Jovanotti - Baciami ancora</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi (01) Jovanotti - Baciami ancora alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button active" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Come in un film feat.Emma"><span class="song-number">02</span><span class="song-title">Come in un film feat.Emma</span><span class="play-symbol">♫</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Come in un film feat.Emma alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Come Vorrei"><span class="song-number">03</span><span class="song-title">Come Vorrei</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Come Vorrei alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Country roads"><span class="song-number">04</span><span class="song-title">Country roads</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Country roads alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Devils &amp; Dust"><span class="song-number">05</span><span class="song-title">Devils &amp; Dust</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Devils &amp; Dust alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 01 24K Magic"><span class="song-number">06</span><span class="song-title">01 24K Magic</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 01 24K Magic alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 01 Potremmo Ritornare"><span class="song-number">07</span><span class="song-title">01 Potremmo Ritornare</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 01 Potremmo Ritornare alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 01 Sultans Of Swing"><span class="song-number">08</span><span class="song-title">01 Sultans Of Swing</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 01 Sultans Of Swing alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 02 Lady Writer"><span class="song-number">09</span><span class="song-title">02 Lady Writer</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 02 Lady Writer alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 03 Questa Nostra Stagione"><span class="song-number">10</span><span class="song-title">03 Questa Nostra Stagione</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 03 Questa Nostra Stagione alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 03 Romeo And Juliet"><span class="song-number">11</span><span class="song-title">03 Romeo And Juliet</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 03 Romeo And Juliet alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 04 Tunnel Of Love"><span class="song-number">12</span><span class="song-title">04 Tunnel Of Love</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 04 Tunnel Of Love alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 05 Private Investigations"><span class="song-number">13</span><span class="song-title">05 Private Investigations</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 05 Private Investigations alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 06 Twisting By The Pool"><span class="song-number">14</span><span class="song-title">06 Twisting By The Pool</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 06 Twisting By The Pool alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 07 Love Over Gold [Live]"><span class="song-number">15</span><span class="song-title">07 Love Over Gold [Live]</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 07 Love Over Gold [Live] alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 08 So Far Away"><span class="song-number">16</span><span class="song-title">08 So Far Away</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 08 So Far Away alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 09 Money For Nothing"><span class="song-number">17</span><span class="song-title">09 Money For Nothing</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 09 Money For Nothing alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 10 Brothers In Arms"><span class="song-number">18</span><span class="song-title">10 Brothers In Arms</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 10 Brothers In Arms alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 11 Walk Of Life"><span class="song-number">19</span><span class="song-title">11 Walk Of Life</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 11 Walk Of Life alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 15 Your Latest Trick [Live]"><span class="song-number">20</span><span class="song-title">15 Your Latest Trick [Live]</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 15 Your Latest Trick [Live] alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Hello"><span class="song-number">21</span><span class="song-title">Hello</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Hello alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Corner Of The Earth"><span class="song-number">22</span><span class="song-title">Corner Of The Earth</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Corner Of The Earth alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Sorry seems to be the hardest word"><span class="song-number">23</span><span class="song-title">Sorry seems to be the hardest word</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Sorry seems to be the hardest word alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Honesty"><span class="song-number">24</span><span class="song-title">Honesty</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Honesty alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta La cura"><span class="song-number">25</span><span class="song-title">La cura</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi La cura alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Leave The Door Open"><span class="song-number">26</span><span class="song-title">Leave The Door Open</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Leave The Door Open alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Man in the Mirror"><span class="song-number">27</span><span class="song-title">Man in the Mirror</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Man in the Mirror alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Musica È"><span class="song-number">28</span><span class="song-title">Musica È</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Musica È alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Occidentali's Karma"><span class="song-number">29</span><span class="song-title">Occidentali's Karma</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Occidentali's Karma alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li></ol>
-          </section>
+          <ol id="playlist"><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta (01) Jovanotti - Baciami ancora"><span class="song-number">01</span><span class="song-title">(01) Jovanotti - Baciami ancora</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi (01) Jovanotti - Baciami ancora alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Come in un film feat.Emma"><span class="song-number">02</span><span class="song-title">Come in un film feat.Emma</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Come in un film feat.Emma alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Come Vorrei"><span class="song-number">03</span><span class="song-title">Come Vorrei</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Come Vorrei alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Country roads"><span class="song-number">04</span><span class="song-title">Country roads</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Country roads alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Devils &amp; Dust"><span class="song-number">05</span><span class="song-title">Devils &amp; Dust</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Devils &amp; Dust alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Feel So Good"><span class="song-number">06</span><span class="song-title">Feel So Good</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Feel So Good alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta I Love You More"><span class="song-number">07</span><span class="song-title">I Love You More</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi I Love You More alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button active" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta La Flaca"><span class="song-number">08</span><span class="song-title">La Flaca</span><span class="play-symbol">♫</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi La Flaca alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Ladies and gentlemen, intro Mario Biondi"><span class="song-number">09</span><span class="song-title">Ladies and gentlemen, intro Mario Biondi</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Ladies and gentlemen, intro Mario Biondi alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Let It Snow"><span class="song-number">10</span><span class="song-title">Let It Snow</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Let It Snow alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 01 24K Magic"><span class="song-number">11</span><span class="song-title">01 24K Magic</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 01 24K Magic alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 01 Potremmo Ritornare"><span class="song-number">12</span><span class="song-title">01 Potremmo Ritornare</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 01 Potremmo Ritornare alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 01 Sultans Of Swing"><span class="song-number">13</span><span class="song-title">01 Sultans Of Swing</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 01 Sultans Of Swing alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 02 Lady Writer"><span class="song-number">14</span><span class="song-title">02 Lady Writer</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 02 Lady Writer alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 03 Questa Nostra Stagione"><span class="song-number">15</span><span class="song-title">03 Questa Nostra Stagione</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 03 Questa Nostra Stagione alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 03 Romeo And Juliet"><span class="song-number">16</span><span class="song-title">03 Romeo And Juliet</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 03 Romeo And Juliet alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 04 Tunnel Of Love"><span class="song-number">17</span><span class="song-title">04 Tunnel Of Love</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 04 Tunnel Of Love alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 05 Private Investigations"><span class="song-number">18</span><span class="song-title">05 Private Investigations</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 05 Private Investigations alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 06 Twisting By The Pool"><span class="song-number">19</span><span class="song-title">06 Twisting By The Pool</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 06 Twisting By The Pool alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 07 Love Over Gold [Live]"><span class="song-number">20</span><span class="song-title">07 Love Over Gold [Live]</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 07 Love Over Gold [Live] alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 08 So Far Away"><span class="song-number">21</span><span class="song-title">08 So Far Away</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 08 So Far Away alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 09 Money For Nothing"><span class="song-number">22</span><span class="song-title">09 Money For Nothing</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 09 Money For Nothing alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 10 Brothers In Arms"><span class="song-number">23</span><span class="song-title">10 Brothers In Arms</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 10 Brothers In Arms alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 11 Walk Of Life"><span class="song-number">24</span><span class="song-title">11 Walk Of Life</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 11 Walk Of Life alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta 15 Your Latest Trick [Live]"><span class="song-number">25</span><span class="song-title">15 Your Latest Trick [Live]</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi 15 Your Latest Trick [Live] alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Hello"><span class="song-number">26</span><span class="song-title">Hello</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Hello alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Corner Of The Earth"><span class="song-number">27</span><span class="song-title">Corner Of The Earth</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Corner Of The Earth alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Sorry seems to be the hardest word"><span class="song-number">28</span><span class="song-title">Sorry seems to be the hardest word</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Sorry seems to be the hardest word alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Honesty"><span class="song-number">29</span><span class="song-title">Honesty</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Honesty alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta La cura"><span class="song-number">30</span><span class="song-title">La cura</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi La cura alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Leave The Door Open"><span class="song-number">31</span><span class="song-title">Leave The Door Open</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Leave The Door Open alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Man in the Mirror"><span class="song-number">32</span><span class="song-title">Man in the Mirror</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Man in the Mirror alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Musica È"><span class="song-number">33</span><span class="song-title">Musica È</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Musica È alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li><li><div style="display: flex; align-items: stretch; gap: 7px; min-width: 0px;"><button type="button" class="song-button" style="flex: 1 1 0%; min-width: 0px;" aria-label="Ascolta Occidentali's Karma"><span class="song-number">34</span><span class="song-title">Occidentali's Karma</span><span class="play-symbol">▶</span></button><div class="song-actions"><button type="button" class="add-button" aria-label="Aggiungi Occidentali's Karma alla tua playlist">＋ Aggiungi</button></div></div><div class="song-organizer"><span>Categorie:</span><label><input type="checkbox"><span>Internazionale</span></label><label><input type="checkbox"><span>Italiana</span></label><label><input type="checkbox"><span>Classici 70-80-90</span></label></div></li></ol>
 
           <div id="status" aria-live="polite">Scegli un brano per ascoltarlo oppure premi «Aggiungi» per creare la tua playlist.</div>
 
-          <section class="personal-playlist" aria-label="Le mie playlist personali">
+          <section class="personal-playlist" aria-label="La mia playlist personale">
             <div class="playlist-heading">
-              <h2 id="personal-playlist-title">La mia playlist</h2>
+              <h2>La mia playlist</h2>
               <span id="queue-count">0 brani</span>
             </div>
-            <div class="personal-playlist-tools">
-              <input id="new-playlist-name" type="text" maxlength="60" placeholder="Nome della nuova playlist" aria-label="Nome della nuova playlist">
-              <button type="button" id="create-playlist">＋ Crea playlist</button>
-            </div>
-            <div class="personal-playlist-tools">
-              <select id="playlist-selector" aria-label="Scegli una playlist"></select>
-              <button type="button" id="rename-playlist">Rinomina</button>
-              <button type="button" id="delete-playlist">Elimina</button>
-              <button type="button" id="shuffle-playlist">🔀 Casuale</button>
-            </div>
-            <p class="playlist-tools-note">Le playlist si salvano in questo browser e su questo dispositivo. Non vengono sincronizzate automaticamente con gli altri dispositivi.</p>
             <ol id="my-playlist"></ol>
-            <p id="queue-empty">Questa playlist è vuota. Premi «＋ Aggiungi» accanto ai brani che vuoi inserire.</p>
+            <p id="queue-empty">La tua playlist è vuota. Premi «Aggiungi» accanto ai brani che vuoi ascoltare.</p>
           </section>
         </section>
       </main>
@@ -697,26 +667,13 @@ const status = document.getElementById("status");
 const myPlaylist = document.getElementById("my-playlist");
 const queueCount = document.getElementById("queue-count");
 const queueEmpty = document.getElementById("queue-empty");
-const playlistSelector = document.getElementById("playlist-selector");
-const newPlaylistName = document.getElementById("new-playlist-name");
-const personalPlaylistTitle = document.getElementById("personal-playlist-title");
-const PLAYLISTS_STORAGE_KEY = "mrGosMusicNamedPlaylistsV1";
 
 let songs = [];
 let personalQueue = [];
-let userPlaylists = [];
-let activePlaylistId = "playlist-1";
 let currentSong = -1;
 let currentQueueId = null;
 let nextQueueId = 1;
 let activeCategory = "all";
-let shuffleMode = false;
-// Sacchetti casuali: ogni brano viene scelto una volta per ciclo.
-let shuffleBag = [];
-let shuffleBagKey = "";
-let lastShuffleChoice = null;
-// Indica quale elenco deve governare il brano successivo: lista/categoria o playlist personale.
-let playbackContext = "songs";
 
 // Le categorie sono assegnate ai nomi esatti dei file MP3.
 // Un brano può appartenere a più categorie.
@@ -824,6 +781,21 @@ const SONG_CATEGORIES = {
   "1-15 your latest trick [live].mp3": [
     "international",
     "classic"
+  ],
+  "01 feel so good.mp3": [
+    "international"
+  ],
+  "01 i love you more.mp3": [
+    "international"
+  ],
+  "01 la flaca.mp3": [
+    "international"
+  ],
+  "01 ladies and gentlemen, intro mario biondi.mp3": [
+    "international"
+  ],
+  "01 let it snow.mp3": [
+    "international"
   ]
 };
 
@@ -949,51 +921,24 @@ if (organizerLaunch) {
 }
 mostraOrganizzatore();
 
-const allSongsPanel = document.getElementById("all-songs-panel");
-const allSongsButton = document.getElementById("show-all-songs");
-
-function aggiornaPulsanteElenco() {
-  const aperto = !allSongsPanel.hidden;
-  allSongsButton.classList.toggle("active", aperto && activeCategory === "all");
-  allSongsButton.setAttribute("aria-pressed", String(aperto));
-  allSongsButton.textContent = aperto ? "Nascondi i brani" : "Tutti i brani";
-}
-
 function setCategory(category) {
   activeCategory = category;
-  resetShuffleBag();
-  playbackContext = "songs";
-  allSongsPanel.hidden = false;
   document.querySelectorAll(".music-category").forEach(button => {
     const selected = button.dataset.category === category;
     button.classList.toggle("active", selected);
     button.setAttribute("aria-pressed", String(selected));
   });
-  aggiornaPulsanteElenco();
+  const allButton = document.getElementById("show-all-songs");
+  const allSelected = category === "all";
+  allButton.classList.toggle("active", allSelected);
+  allButton.setAttribute("aria-pressed", String(allSelected));
   renderPlaylist();
 }
 
 document.querySelectorAll(".music-category").forEach(button => {
   button.addEventListener("click", () => setCategory(button.dataset.category));
 });
-allSongsButton.addEventListener("click", () => {
-  if (allSongsPanel.hidden) {
-    document.querySelectorAll(".music-category").forEach(button => {
-      button.classList.remove("active");
-      button.setAttribute("aria-pressed", "false");
-    });
-    activeCategory = "all";
-    resetShuffleBag();
-    playbackContext = "songs";
-    allSongsPanel.hidden = false;
-    renderPlaylist();
-  } else {
-    allSongsPanel.hidden = true;
-  }
-  aggiornaPulsanteElenco();
-});
-
-aggiornaPulsanteElenco();
+document.getElementById("show-all-songs").addEventListener("click", () => setCategory("all"));
 
 function prettyName(filename) {
   return filename
@@ -1005,239 +950,29 @@ function prettyName(filename) {
 
 function saveQueue() {
   try {
-    const active = userPlaylists.find(item => item.id === activePlaylistId);
-    if (active) active.items = personalQueue;
-    localStorage.setItem(PLAYLISTS_STORAGE_KEY, JSON.stringify(userPlaylists));
-    // Mantiene una copia compatibile con la vecchia versione del lettore.
     localStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(personalQueue));
   } catch (error) {
-    console.warn("Non riesco a salvare le playlist in questo browser.", error);
+    console.warn("Non riesco a salvare la playlist in questo browser.", error);
   }
 }
 
 function loadSavedQueue() {
   try {
-    const savedPlaylists = JSON.parse(localStorage.getItem(PLAYLISTS_STORAGE_KEY) || "null");
-    if (Array.isArray(savedPlaylists) && savedPlaylists.length) {
-      userPlaylists = savedPlaylists
-        .filter(p => p && typeof p.id === "string" && typeof p.name === "string" && Array.isArray(p.items))
-        .map(p => ({
-          id: p.id,
-          name: p.name.slice(0, 60) || "La mia playlist",
-          items: p.items.filter(item => item && typeof item.filename === "string")
-            .map(item => ({
-              id: Number.isInteger(item.id) ? item.id : nextQueueId++,
-              filename: item.filename,
-              title: typeof item.title === "string" ? item.title : prettyName(item.filename)
-            }))
-        }));
-      if (!userPlaylists.length) userPlaylists = [];
-    }
-    if (!userPlaylists.length) {
-      const oldQueue = JSON.parse(localStorage.getItem(QUEUE_STORAGE_KEY) || "[]");
-      const items = Array.isArray(oldQueue) ? oldQueue
+    const saved = JSON.parse(localStorage.getItem(QUEUE_STORAGE_KEY) || "[]");
+    if (Array.isArray(saved)) {
+      personalQueue = saved
         .filter(item => item && typeof item.filename === "string")
         .map(item => ({
           id: Number.isInteger(item.id) ? item.id : nextQueueId++,
           filename: item.filename,
           title: typeof item.title === "string" ? item.title : prettyName(item.filename)
-        })) : [];
-      userPlaylists = [{ id: "playlist-1", name: "La mia playlist", items }];
+        }));
+      nextQueueId = Math.max(1, ...personalQueue.map(item => item.id + 1));
     }
-    activePlaylistId = userPlaylists[0].id;
-    personalQueue = userPlaylists[0].items;
-    nextQueueId = Math.max(1, ...userPlaylists.flatMap(p => p.items).map(item => item.id + 1));
   } catch (error) {
-    userPlaylists = [{ id: "playlist-1", name: "La mia playlist", items: [] }];
-    activePlaylistId = "playlist-1";
-    personalQueue = userPlaylists[0].items;
-  }
-  renderPlaylistSelector();
-}
-
-function renderPlaylistSelector() {
-  if (!playlistSelector) return;
-  playlistSelector.innerHTML = "";
-  userPlaylists.forEach(item => {
-    const option = document.createElement("option");
-    option.value = item.id;
-    option.textContent = item.name;
-    playlistSelector.appendChild(option);
-  });
-  playlistSelector.value = activePlaylistId;
-  const active = userPlaylists.find(item => item.id === activePlaylistId);
-  if (active) personalPlaylistTitle.textContent = active.name;
-}
-
-function activatePlaylist(id) {
-  const target = userPlaylists.find(item => item.id === id);
-  if (!target) return;
-  const currentItemStillExists = currentQueueId !== null && target.items.some(item => item.id === currentQueueId);
-  activePlaylistId = target.id;
-  personalQueue = target.items;
-  playbackContext = "queue";
-  if (!currentItemStillExists) currentQueueId = null;
-  renderPlaylistSelector();
-  renderPersonalPlaylist();
-  status.textContent = "Playlist selezionata: " + target.name;
-}
-
-document.getElementById("create-playlist").addEventListener("click", () => {
-  const name = newPlaylistName.value.trim();
-  if (!name) {
-    status.textContent = "Scrivi prima il nome della nuova playlist.";
-    newPlaylistName.focus();
-    return;
-  }
-  const id = "playlist-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
-  const created = { id, name: name.slice(0, 60), items: [] };
-  userPlaylists.push(created);
-  activePlaylistId = id;
-  personalQueue = created.items;
-  playbackContext = "queue";
-  newPlaylistName.value = "";
-  saveQueue();
-  renderPlaylistSelector();
-  renderPersonalPlaylist();
-  status.textContent = "Creata la playlist: " + created.name;
-});
-newPlaylistName.addEventListener("keydown", event => {
-  if (event.key === "Enter") document.getElementById("create-playlist").click();
-});
-playlistSelector.addEventListener("change", () => activatePlaylist(playlistSelector.value));
-
-document.getElementById("rename-playlist").addEventListener("click", () => {
-  const active = userPlaylists.find(item => item.id === activePlaylistId);
-  if (!active) return;
-  const name = newPlaylistName.value.trim();
-  if (!name) {
-    status.textContent = "Scrivi il nuovo nome nel campo qui sopra, poi premi «Rinomina».";
-    newPlaylistName.focus();
-    return;
-  }
-  active.name = name.slice(0, 60);
-  newPlaylistName.value = "";
-  saveQueue();
-  renderPlaylistSelector();
-  status.textContent = "Playlist rinominata: " + active.name;
-});
-
-document.getElementById("delete-playlist").addEventListener("click", () => {
-  if (userPlaylists.length <= 1) {
-    status.textContent = "Deve rimanere almeno una playlist. Puoi svuotarla rimuovendo i brani.";
-    return;
-  }
-  const active = userPlaylists.find(item => item.id === activePlaylistId);
-  if (!active || !confirm("Vuoi eliminare la playlist «" + active.name + "»? I file MP3 non verranno eliminati.")) return;
-  userPlaylists = userPlaylists.filter(item => item.id !== activePlaylistId);
-  activePlaylistId = userPlaylists[0].id;
-  personalQueue = userPlaylists[0].items;
-  playbackContext = "queue";
-  currentQueueId = null;
-  saveQueue();
-  renderPlaylistSelector();
-  renderPersonalPlaylist();
-  status.textContent = "Playlist eliminata. Le canzoni originali sono rimaste al loro posto.";
-});
-
-const shuffleButton = document.getElementById("shuffle-playlist");
-const shuffleSongsButton = document.getElementById("shuffle-songs");
-
-function currentSongPool() {
-  return songs
-    .map((song, index) => ({ song, index }))
-    .filter(({ song }) => activeCategory === "all" || categorieDelBrano(song.filename).includes(activeCategory));
-}
-
-function resetShuffleBag() {
-  shuffleBag = [];
-  shuffleBagKey = "";
-  lastShuffleChoice = null;
-}
-
-function shuffleArray(items) {
-  const result = items.slice();
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
-}
-
-function nextFromShuffleBag(type) {
-  const pool = type === "queue"
-    ? personalQueue.filter(item => findSongByFilename(item.filename)).map(item => item.id)
-    : currentSongPool().map(item => item.index);
-  const key = type + ":" + (type === "queue" ? activePlaylistId : activeCategory) + ":" + pool.join("|");
-
-  if (key !== shuffleBagKey || shuffleBag.length === 0) {
-    shuffleBagKey = key;
-    shuffleBag = shuffleArray(pool);
-    // Evita, se possibile, di ricominciare il nuovo ciclo con lo stesso brano appena ascoltato.
-    if (shuffleBag.length > 1 && shuffleBag[0] === lastShuffleChoice) {
-      [shuffleBag[0], shuffleBag[1]] = [shuffleBag[1], shuffleBag[0]];
-    }
-  }
-
-  if (!shuffleBag.length) return null;
-  const chosen = shuffleBag.shift();
-  lastShuffleChoice = chosen;
-  return chosen;
-}
-
-function chooseRandomQueueItem() {
-  const chosenId = nextFromShuffleBag("queue");
-  if (chosenId === null) return false;
-  playQueueItem(chosenId);
-  return true;
-}
-
-function chooseRandomSong() {
-  const chosenIndex = nextFromShuffleBag("songs");
-  if (chosenIndex === null) return false;
-  playSong(chosenIndex);
-  return true;
-}
-
-function updateShuffleButton() {
-  const label = shuffleMode ? "🔀 Casuale attivo" : "🔀 Casuale";
-  [shuffleButton, shuffleSongsButton].forEach(button => {
-    if (!button) return;
-    button.textContent = label;
-    button.setAttribute("aria-pressed", String(shuffleMode));
-    button.classList.toggle("active", shuffleMode);
-  });
-}
-
-function toggleShuffle() {
-  const available = playbackContext === "queue"
-    ? personalQueue.filter(item => findSongByFilename(item.filename)).length
-    : currentSongPool().length;
-
-  if (available < 2) {
-    status.textContent = playbackContext === "queue"
-      ? "Aggiungi almeno due brani disponibili alla playlist per usare la riproduzione casuale."
-      : "Servono almeno due brani disponibili nell'elenco o nella categoria scelta per usare Casuale.";
-    return;
-  }
-
-  shuffleMode = !shuffleMode;
-  resetShuffleBag();
-  updateShuffleButton();
-
-  if (shuffleMode) {
-    status.textContent = playbackContext === "queue"
-      ? "Casuale attivo: sceglierò soltanto i brani della playlist personale."
-      : "Casuale attivo: sceglierò soltanto i brani dell'elenco o della categoria selezionata.";
-    if (playbackContext === "queue") chooseRandomQueueItem(false);
-    else chooseRandomSong(false);
-  } else {
-    status.textContent = "Riproduzione casuale disattivata.";
+    personalQueue = [];
   }
 }
-
-shuffleButton.addEventListener("click", toggleShuffle);
-shuffleSongsButton.addEventListener("click", toggleShuffle);
 
 function findSongByFilename(filename) {
   return songs.find(song => song.filename === filename);
@@ -1247,8 +982,6 @@ function playSong(index) {
   if (index < 0 || index >= songs.length) return;
   currentSong = index;
   currentQueueId = null;
-  playbackContext = "songs";
-  if (shuffleMode && shuffleBagKey.startsWith("songs:")) shuffleBag = shuffleBag.filter(item => item !== index);
 
   const song = songs[index];
   audio.src = song.url;
@@ -1276,8 +1009,6 @@ function playQueueItem(queueId) {
 
   currentQueueId = item.id;
   currentSong = songs.indexOf(song);
-  playbackContext = "queue";
-  if (shuffleMode && shuffleBagKey.startsWith("queue:")) shuffleBag = shuffleBag.filter(id => id !== item.id);
   audio.src = song.url;
   now.textContent = item.title;
 
@@ -1515,37 +1246,22 @@ async function loadSongs() {
 }
 
 audio.addEventListener("ended", () => {
-  if (playbackContext === "queue") {
-    if (shuffleMode) {
-      if (!chooseRandomQueueItem()) {
-        status.textContent = "Hai ascoltato tutti i brani della playlist in questo ciclo; preparo un nuovo ordine casuale.";
-      }
-      return;
-    }
-
+  if (currentQueueId !== null) {
     const index = personalQueue.findIndex(item => item.id === currentQueueId);
+    
+
     if (index >= 0 && index + 1 < personalQueue.length) {
       playQueueItem(personalQueue[index + 1].id);
     }
     return;
   }
 
-  const pool = currentSongPool();
-  if (shuffleMode) {
-    if (!chooseRandomSong()) {
-      status.textContent = "Hai ascoltato tutti i brani di questo elenco in questo ciclo; preparo un nuovo ordine casuale.";
-    }
-    return;
-  }
-
-  const poolPosition = pool.findIndex(item => item.index === currentSong);
-  if (poolPosition >= 0 && poolPosition + 1 < pool.length) {
-    playSong(pool[poolPosition + 1].index);
+  if (currentSong >= 0 && currentSong + 1 < songs.length) {
+    playSong(currentSong + 1);
   }
 });
 
 loadSavedQueue();
-updateShuffleButton();
 setCategory("all");
 renderPersonalPlaylist();
 loadSongs();
