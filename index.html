@@ -454,6 +454,77 @@ footer {
    background: #302515;
 }
 
+
+/* CORNICI DORATE DELLE ILLUSTRAZIONI */
+.artwork,
+.vespa-artwork {
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid var(--oro);
+  border-radius: 5px;
+  background: linear-gradient(145deg, #17140e, #090909 70%, #17130b);
+  box-shadow: inset 0 0 0 1px #8b6b3533, 0 0 12px #d8b66c18;
+}
+
+
+/* EQUALIZZATORE: 33 ASTINE DISTINTE, TRICOLORE */
+.radio-equalizer {
+  display: grid !important;
+  grid-template-columns: repeat(33, minmax(0, 1fr));
+  align-items: end;
+  justify-content: initial;
+  gap: 3px;
+  height: 57px;
+  min-width: 0;
+  padding: 4px 2px 0;
+  overflow: hidden;
+  border-bottom: 1px solid #24506a;
+}
+.radio-equalizer span {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 4px;
+  align-self: end;
+  margin: 0;
+  border-radius: 2px 2px 0 0;
+  opacity: .28;
+  box-shadow: none;
+  background: #777;
+}
+.radio-equalizer span:nth-child(-n+11) {
+  background: linear-gradient(180deg, #9cff55, #19c51d);
+  box-shadow: 0 0 4px #45e52b66;
+}
+.radio-equalizer span:nth-child(n+12):nth-child(-n+22) {
+  background: linear-gradient(180deg, #ffffff, #d9d9d9);
+  box-shadow: 0 0 4px #ffffff55;
+}
+.radio-equalizer span:nth-child(n+23) {
+  background: linear-gradient(180deg, #ff7777, #ed1717);
+  box-shadow: 0 0 4px #f22b2b66;
+}
+.hi-fi-unit.radio-playing .radio-equalizer span {
+  opacity: 1;
+  animation-name: radioBars;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.radio-equalizer span:nth-child(3n+1) { animation-duration: .47s; animation-delay: -.13s; }
+.radio-equalizer span:nth-child(3n+2) { animation-duration: .69s; animation-delay: -.31s; }
+.radio-equalizer span:nth-child(3n)   { animation-duration: .56s; animation-delay: -.22s; }
+@keyframes radioBars {
+  0% { height: 8%; }
+  23% { height: 57%; }
+  51% { height: 24%; }
+  76% { height: 91%; }
+  100% { height: 39%; }
+}
+@media (max-width: 680px) {
+  .radio-equalizer { height: 34px; gap: 2px; padding-left: 1px; padding-right: 1px; }
+}
+
 /* FINE STILI */
 .music-categories {
   display: grid;
@@ -562,7 +633,251 @@ footer {
 .personal-playlist-tools button:hover { border-color:var(--oro-chiaro); background:#302515; }
 .playlist-tools-note { color:var(--secondario); font-size:12px; line-height:1.5; margin:0 0 12px; }
 
+
+
+/* PROVA LOCALE: impianto hi-fi compatto e integrato */
+.hi-fi-unit { margin: 18px auto 22px; width:100%; overflow:hidden; border:1px solid #d7dadd; border-radius:9px; padding:9px; color:#1b242b; background:linear-gradient(145deg,#f3f4f4 0%,#aeb5ba 18%,#e4e6e7 42%,#a8afb4 72%,#dfe1e2 100%); box-shadow:inset 0 1px 0 #fff, inset 0 -2px 5px #5a606455,0 12px 30px #0008; }
+.hi-fi-faceplate,.hi-fi-music-faceplate { border:1px solid #7d858a; border-radius:4px; padding:10px; background:linear-gradient(180deg,#dce0e2,#b5bbc0 50%,#d2d6d8); box-shadow:inset 0 1px 0 #fff; }
+.hi-fi-brandline,.hi-fi-subhead { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 2px 7px; border-bottom:1px solid #899196; color:#303940; font-family:Arial,sans-serif; }
+.hi-fi-brand { font-size:13px; font-weight:900; letter-spacing:3px; }
+.hi-fi-model,.hi-fi-subhead { font-size:9px; letter-spacing:1.5px; }
+.hi-fi-radio-display { display:grid; grid-template-columns:minmax(0,1fr) minmax(130px,38%); gap:12px; align-items:center; margin:9px 0; padding:12px; min-height:92px; border:2px solid #303b43; border-radius:3px; color:#bcecff; background:linear-gradient(180deg,#071522,#0b2c43 55%,#06131e); box-shadow:inset 0 0 17px #000,0 1px #fff; }
+.radio-display-copy { min-width:0; }
+.radio-display-label { color:#65bce9; font-size:9px; letter-spacing:2px; margin-bottom:7px; }
+#radio-current-name { font:700 clamp(16px,2.5vw,23px) Arial,sans-serif; overflow-wrap:anywhere; text-shadow:0 0 9px #39a9ef88; }
+#radio-current-state { margin-top:6px; color:#73c8f2; font:9px Arial,sans-serif; letter-spacing:1.4px; }
+.radio-equalizer { display:flex; align-items:end; justify-content:space-between; gap:2px; height:57px; min-width:0; padding:4px 1px 0; border-bottom:1px solid #24506a; }
+.radio-equalizer span { flex:1 1 0; min-width:1px; height:4px; background:linear-gradient(180deg,#b6efff,#36adf1 70%,#126da9); border-radius:2px 2px 0 0; opacity:.28; box-shadow:0 0 4px #36b6ff55; }
+.hi-fi-unit.radio-playing .radio-equalizer span { opacity:1; animation:radioBars .62s ease-in-out infinite alternate; }
+.radio-equalizer span:nth-child(3n) { animation-delay:-.2s; }.radio-equalizer span:nth-child(4n) { animation-delay:-.45s; }.radio-equalizer span:nth-child(5n) { animation-delay:-.1s; }
+@keyframes radioBars { 0%{height:7%} 25%{height:38%} 55%{height:92%} 80%{height:48%} 100%{height:70%} }
+.radio-stations { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:6px; padding:2px 0 9px; }
+.radio-station { min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; padding:7px 3px; border:1px solid #7c858a; border-radius:4px; color:#20272c; background:linear-gradient(#f6f7f7,#c3c9cc); box-shadow:inset 0 1px #fff; cursor:pointer; font:700 9px Arial,sans-serif; }
+.radio-station:hover,.radio-station.active { border-color:#a27a2b; background:linear-gradient(#fff4d0,#d7b86c); box-shadow:0 0 0 1px #d7b86c66; }
+.radio-station img { display:block; width:31px; height:31px; object-fit:contain; border-radius:50%; background:#fff; border:1px solid #b38b3e; padding:2px; }
+.radio-station span { overflow-wrap:anywhere; text-align:center; line-height:1.15; }
+.hi-fi-controls { display:flex; align-items:center; justify-content:space-between; gap:12px; border-top:1px solid #8d9499; padding:8px 2px 0; font:700 9px Arial,sans-serif; letter-spacing:1px; }
+.hi-fi-controls label { display:flex; align-items:center; gap:9px; flex:1; }
+#hi-fi-volume { width:min(220px,55%); accent-color:#2b83b5; }
+#hi-fi-volume-label { min-width:30px; color:#303940; }
+#radio-stop { border:1px solid #7b858b; border-radius:3px; background:linear-gradient(#f4f5f5,#bdc3c6); color:#303940; padding:7px 9px; font-size:9px; cursor:pointer; }
+.hi-fi-music-faceplate { margin-top:7px; }
+.hi-fi-music-faceplate .music-category { border-color:#899196; background:linear-gradient(#e6e9ea,#c1c7ca); color:#273037; box-shadow:inset 0 1px #fff; }
+.hi-fi-music-faceplate .music-category.active { border-color:#a27a2b; background:linear-gradient(#fff2ca,#d7b86c); }
+.hi-fi-music-faceplate .player { border:1px solid #303b43; border-radius:3px; background:linear-gradient(180deg,#071522,#0b2c43 55%,#06131e); color:#bcecff; box-shadow:inset 0 0 12px #000; }
+.hi-fi-music-faceplate .now-label { color:#65bce9; }
+.hi-fi-music-faceplate #now { color:#c5efff; }
+.hi-fi-music-faceplate audio { accent-color:#36adf1; }
+.hi-fi-music-faceplate .player-note { color:#92b5c6; }
+.hi-fi-music-faceplate .playlist-heading h2,.hi-fi-music-faceplate .personal-playlist h2 { color:#28323a; }
+.hi-fi-music-faceplate #count,.hi-fi-music-faceplate #queue-count { color:#3f4b53; }
+.hi-fi-music-faceplate .song-button { border-color:#778187; border-radius:3px; background:linear-gradient(#eef0f1,#cbd0d3); color:#1e272d; }
+.hi-fi-music-faceplate .song-button:hover,.hi-fi-music-faceplate .song-button.active { border-color:#9d782d; background:linear-gradient(#fff2c9,#d8b96e); }
+.hi-fi-music-faceplate .song-number,.hi-fi-music-faceplate .play-symbol { color:#8a6621; }
+.hi-fi-music-faceplate .add-button,.hi-fi-music-faceplate .queue-action,.hi-fi-music-faceplate .personal-playlist-tools button { color:#273037; background:linear-gradient(#f4f5f5,#c1c7ca); border-color:#7c858a; }
+.hi-fi-music-faceplate .personal-playlist-tools input,.hi-fi-music-faceplate .personal-playlist-tools select { color:#1e272d; background:#eef0f1; border-color:#7c858a; }
+.hi-fi-music-faceplate #status,.hi-fi-music-faceplate .playlist-tools-note,.hi-fi-music-faceplate #queue-empty { color:#3f4b53; }
+.hi-fi-music-faceplate .gold-rule { background:linear-gradient(90deg,transparent,#71818b,transparent); margin:12px 0; }
+@media(max-width:680px) { .radio-stations{grid-template-columns:repeat(4,minmax(0,1fr));} .hi-fi-radio-display{grid-template-columns:minmax(0,1fr);}.radio-equalizer{height:34px}.hi-fi-unit{padding:5px}.hi-fi-faceplate,.hi-fi-music-faceplate{padding:7px}.hi-fi-model{font-size:8px}.radio-station img{width:27px;height:27px} }
+
+
+
+/* RITOCCO ESTETICO: radio nera, finiture oro e equalizzatore a tre colori */
+.hi-fi-unit {
+  border: 1px solid #c9a451;
+  border-radius: 7px;
+  padding: 8px;
+  color: #eee5d1;
+  background: linear-gradient(145deg,#171717 0%,#050505 48%,#191919 100%);
+  box-shadow: inset 0 1px 0 #ffffff18, inset 0 -2px 5px #000, 0 12px 30px #0009;
+}
+.hi-fi-faceplate,
+.hi-fi-music-faceplate {
+  color: #eee5d1;
+  border: 1px solid #c9a451;
+  border-radius: 4px;
+  padding: 10px;
+  background: linear-gradient(180deg,#151515,#080808 52%,#121212);
+  box-shadow: inset 0 1px 0 #ffffff0b;
+}
+.hi-fi-brandline,
+.hi-fi-subhead {
+  color: #e8cc86;
+  border-bottom: 1px solid #a98436;
+}
+.hi-fi-brand { color: #f5dfa0; }
+.hi-fi-model,.hi-fi-subhead { color: #c8b47d; }
+.hi-fi-radio-display {
+  border: 1px solid #c9a451;
+  border-radius: 3px;
+  background: linear-gradient(180deg,#06121b,#071e2d 55%,#050d14);
+  box-shadow: inset 0 0 17px #000,0 0 0 1px #c9a45118;
+}
+.radio-equalizer { border-bottom: 1px solid #9c7a35; }
+.radio-equalizer span {
+  height: 3px;
+  opacity: .2;
+  box-shadow: 0 0 5px currentColor;
+  background: #35b9ff;
+  animation: radioBars 0.72s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+.hi-fi-unit.radio-playing .radio-equalizer span { opacity: .98; animation-play-state: running; }
+/* Tre famiglie cromatiche e ritmi sfalsati: le barre non si muovono più tutte insieme. */
+.radio-equalizer span:nth-child(3n+1) { color:#35b9ff; background:linear-gradient(180deg,#b7ecff,#35b9ff 65%,#126da9); animation-duration:.47s; }
+.radio-equalizer span:nth-child(3n+2) { color:#e8c56e; background:linear-gradient(180deg,#fff0b8,#e8c56e 65%,#94712e); animation-duration:.69s; }
+.radio-equalizer span:nth-child(3n) { color:#7fe7d0; background:linear-gradient(180deg,#c4fff1,#7fe7d0 65%,#168d84); animation-duration:.91s; }
+.radio-equalizer span:nth-child(5n) { animation-duration:.56s; }
+.radio-equalizer span:nth-child(7n) { animation-duration:1.03s; }
+.radio-equalizer span:nth-child(2n) { animation-delay:-.31s; }
+.radio-equalizer span:nth-child(4n) { animation-delay:-.52s; }
+.radio-equalizer span:nth-child(5n) { animation-delay:-.17s; }
+@keyframes radioBars {
+  0% { height:8%; }
+  18% { height:34%; }
+  41% { height:76%; }
+  63% { height:28%; }
+  82% { height:96%; }
+  100% { height:45%; }
+}
+.radio-stations { gap: 6px; }
+.radio-station {
+  border: 1px solid #c9a451;
+  border-radius: 4px;
+  color: #eee5d1;
+  background: linear-gradient(180deg,#1a1a1a,#080808);
+  box-shadow: inset 0 1px #ffffff0a;
+}
+.radio-station:hover,.radio-station.active {
+  border-color: #f5dfa0;
+  color: #fff0bd;
+  background: linear-gradient(180deg,#302616,#171108);
+  box-shadow: inset 0 0 0 1px #c9a45144,0 0 8px #d8b66c22;
+}
+.radio-station img {
+  border: 2px solid #c9a451;
+  border-radius: 50%;
+  background: #090909;
+  padding: 2px;
+  box-shadow: 0 0 0 1px #000;
+}
+.hi-fi-controls { border-top: 1px solid #a98436; color: #e8cc86; }
+#hi-fi-volume { accent-color: #d8b66c; }
+#hi-fi-volume-label { color: #f5dfa0; }
+#radio-stop {
+  border: 1px solid #c9a451;
+  color: #f5dfa0;
+  background: linear-gradient(#242016,#0b0b0b);
+}
+.hi-fi-music-faceplate .music-category {
+  border: 1px solid #c9a451;
+  color: #eee5d1;
+  background: linear-gradient(#1c1c1c,#080808);
+  box-shadow: inset 0 1px #ffffff08;
+}
+.hi-fi-music-faceplate .music-category.active,
+.hi-fi-music-faceplate .music-category:hover {
+  border-color: #f5dfa0;
+  color: #fff0bd;
+  background: linear-gradient(#302616,#171108);
+}
+.hi-fi-music-faceplate .music-category img { border: 1px solid #c9a451; border-radius: 4px; }
+.hi-fi-music-faceplate .player {
+  border: 1px solid #c9a451;
+  border-radius: 3px;
+  background: linear-gradient(180deg,#06121b,#071e2d 55%,#050d14);
+  color: #bcecff;
+}
+.hi-fi-music-faceplate .song-button {
+  border: 1px solid #c9a451;
+  border-radius: 3px;
+  background: linear-gradient(#1c1c1c,#090909);
+  color: #eee5d1;
+}
+.hi-fi-music-faceplate .song-button:hover,
+.hi-fi-music-faceplate .song-button.active {
+  border-color: #f5dfa0;
+  background: linear-gradient(#302616,#171108);
+  color: #fff0bd;
+}
+.hi-fi-music-faceplate .song-number,
+.hi-fi-music-faceplate .play-symbol { color: #e8c56e; }
+.hi-fi-music-faceplate .add-button,
+.hi-fi-music-faceplate .queue-action,
+.hi-fi-music-faceplate .personal-playlist-tools button {
+  color: #f5dfa0;
+  background: linear-gradient(#242016,#0b0b0b);
+  border: 1px solid #c9a451;
+}
+.hi-fi-music-faceplate .personal-playlist-tools input,
+.hi-fi-music-faceplate .personal-playlist-tools select {
+  color: #eee5d1; background: #090909; border: 1px solid #c9a451;
+}
+.hi-fi-music-faceplate .playlist-heading h2,
+.hi-fi-music-faceplate .personal-playlist h2 { color: #f5dfa0; }
+.hi-fi-music-faceplate #count,
+.hi-fi-music-faceplate #queue-count,
+.hi-fi-music-faceplate #status,
+.hi-fi-music-faceplate .playlist-tools-note,
+.hi-fi-music-faceplate #queue-empty { color: #b7a985; }
+.hi-fi-music-faceplate .gold-rule { background:linear-gradient(90deg,transparent,#c9a451,transparent); }
+.hi-fi-music-faceplate .all-songs-button,
+.hi-fi-music-faceplate .organizer-panel,
+.hi-fi-music-faceplate .organizer-panel button { border-color:#c9a451; }
+@media(max-width:680px) {
+  .hi-fi-unit { padding:5px; }
+  .hi-fi-faceplate,.hi-fi-music-faceplate { padding:7px; }
+}
+
 </style>
+
+<style id="equalizzatore-tricolore-fix">
+/* Correzione finale: 33 astine separate, tricolore luminoso. */
+.hi-fi-unit .radio-equalizer {
+  display: grid !important;
+  grid-template-columns: repeat(33, minmax(0, 1fr)) !important;
+  align-items: end !important;
+  justify-content: stretch !important;
+  gap: 3px !important;
+  height: 57px !important;
+  min-width: 0 !important;
+  padding: 4px 2px 0 !important;
+  border-bottom: 1px solid #c7a24d !important;
+  overflow: hidden !important;
+}
+.hi-fi-unit .radio-equalizer > span {
+  display: block !important;
+  position: relative !important;
+  align-self: end !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: var(--bar-height, 7%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 2px 2px 0 0 !important;
+  opacity: 1 !important;
+  animation: none !important;
+  transition: height 90ms linear !important;
+  box-shadow: 0 0 5px currentColor !important;
+}
+.hi-fi-unit .radio-equalizer > span:nth-child(-n+11) {
+  color: #42ff48 !important;
+  background: linear-gradient(to top, #079b19, #35ff4b 72%, #d5ffd8) !important;
+}
+.hi-fi-unit .radio-equalizer > span:nth-child(n+12):nth-child(-n+22) {
+  color: #ffffff !important;
+  background: linear-gradient(to top, #b8b8b8, #ffffff 72%, #ffffff) !important;
+}
+.hi-fi-unit .radio-equalizer > span:nth-child(n+23) {
+  color: #ff3b3b !important;
+  background: linear-gradient(to top, #b00016, #ff3434 72%, #ffd0d0) !important;
+}
+@media (max-width: 680px) {
+  .hi-fi-unit .radio-equalizer { height: 38px !important; gap: 2px !important; }
+}
+</style>
+
 </head>
 
 <body>
@@ -594,6 +909,27 @@ footer {
           <div class="eyebrow">Un viaggio tra le emozioni</div>
           <h1>La stanza<br>della musica</h1>
           <p class="subtitle">Siediti, scegli, ascolta 🎵</p>
+
+<section class="hi-fi-unit" aria-label="Impianto hi-fi La stanza della musica">
+  <div class="hi-fi-faceplate">
+    <div class="hi-fi-brandline"><span class="hi-fi-brand">MR GOS · HI-FI</span><span class="hi-fi-model">STEREO WEB & MP3 · VINTAGE EDITION</span></div>
+    <div class="hi-fi-radio-display">
+      <div class="radio-display-copy"><div class="radio-display-label">SINTONIZZATORE INTERNET</div><div id="radio-current-name">Scegli una radio</div><div id="radio-current-state">PRONTO ALL'ASCOLTO</div></div>
+      <div id="radio-equalizer" class="radio-equalizer" aria-label="Equalizzatore audio" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+    <div class="radio-stations" aria-label="Scegli una stazione radio">
+      <button type="button" class="radio-station" data-radio="0" aria-label="Ascolta Radio Monte Carlo"><img src="https://www.google.com/s2/favicons?domain=radiomontecarlo.net&sz=128" alt="Logo Radio Monte Carlo"><span>Monte Carlo</span></button>
+      <button type="button" class="radio-station" data-radio="1" aria-label="Ascolta Radio Capital"><img src="https://www.google.com/s2/favicons?domain=capital.it&sz=128" alt="Logo Radio Capital"><span>Capital</span></button>
+      <button type="button" class="radio-station" data-radio="2" aria-label="Ascolta Radio Bruno"><img src="https://www.google.com/s2/favicons?domain=radiobruno.it&sz=128" alt="Logo Radio Bruno"><span>Radio Bruno</span></button>
+      <button type="button" class="radio-station" data-radio="3" aria-label="Ascolta Radio 105"><img src="https://www.google.com/s2/favicons?domain=105.net&sz=128" alt="Logo Radio 105"><span>Radio 105</span></button>
+      <button type="button" class="radio-station" data-radio="4" aria-label="Ascolta Radio Deejay"><img src="https://www.google.com/s2/favicons?domain=deejay.it&sz=128" alt="Logo Radio Deejay"><span>Deejay</span></button>
+      <button type="button" class="radio-station" data-radio="5" aria-label="Ascolta Radio Italia"><img src="https://www.google.com/s2/favicons?domain=radioitalia.it&sz=128" alt="Logo Radio Italia"><span>Radio Italia</span></button>
+      <button type="button" class="radio-station" data-radio="6" aria-label="Ascolta Virgin Radio"><img src="https://www.google.com/s2/favicons?domain=virginradio.it&sz=128" alt="Logo Virgin Radio"><span>Virgin Radio</span></button>
+      <button type="button" class="radio-station" data-radio="7" aria-label="Ascolta RTL 102.5"><img src="https://www.google.com/s2/favicons?domain=rtl.it&sz=128" alt="Logo RTL 102.5"><span>RTL 102.5</span></button>
+    </div>
+    <div class="hi-fi-controls"><label for="hi-fi-volume">VOLUME <input id="hi-fi-volume" type="range" min="0" max="100" value="80"><span id="hi-fi-volume-label">80%</span></label><button type="button" id="radio-stop">■ FERMA RADIO</button></div>
+  </div>
+  <div class="hi-fi-music-faceplate"><div class="hi-fi-subhead"><span>LETTORE MUSICALE</span><span>MP3 · PLAYLIST</span></div>
 
       
 
@@ -673,6 +1009,8 @@ footer {
             <ol id="my-playlist"></ol>
             <p id="queue-empty">Questa playlist è vuota. Premi «＋ Aggiungi» accanto ai brani che vuoi inserire.</p>
           </section>
+  </div>
+</section>
         </section>
       </main>
 
@@ -681,6 +1019,7 @@ footer {
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
 <script>
 const OWNER = "gozzimarco0508-hub";
 const REPO = "stanza-musica";
@@ -1544,11 +1883,139 @@ audio.addEventListener("ended", () => {
   }
 });
 
+
+
+// Sintonizzatore radio della prova locale: condivide l'unico elemento audio con i brani MP3.
+const radioStations = [
+ {name:"Radio Monte Carlo",url:"https://icecast.unitedradio.it/RMC.mp3"},
+ {name:"Radio Capital",url:"https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiocapital/radiocapital/master_ma.m3u8"},
+ {name:"Radio Bruno",url:"https://stream6.xdevel.com/audio4s975355-395/stream/icecast.audio"},
+ {name:"Radio 105",url:"https://icecast.unitedradio.it/Radio105.mp3"},
+ {name:"Radio Deejay",url:"https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiodeejay/radiodeejay/master_ma.m3u8"},
+ {name:"Radio Italia",url:"https://radioitaliasmi.akamaized.net/hls/live/2093120/RISMI/master.m3u8"},
+ {name:"Virgin Radio",url:"https://icy.unitedradio.it/Virgin.mp3"},
+ {name:"RTL 102.5",url:"https://streamingv2.shoutcast.com/rtl-1025_48.aac"}
+];
+let radioHlsInstance = null;
+let activeRadioIndex = -1;
+const hiFiUnit = document.querySelector('.hi-fi-unit');
+const radioNameDisplay = document.getElementById('radio-current-name');
+const radioStateDisplay = document.getElementById('radio-current-state');
+const radioVolume = document.getElementById('hi-fi-volume');
+const radioVolumeLabel = document.getElementById('hi-fi-volume-label');
+function stopRadioHls() {
+  if (radioHlsInstance) { radioHlsInstance.destroy(); radioHlsInstance = null; }
+}
+function markRadioState(isPlaying, message) {
+  hiFiUnit.classList.toggle('radio-playing', isPlaying);
+  radioStateDisplay.textContent = message;
+}
+function playRadioStation(index) {
+  if (index < 0 || index >= radioStations.length) return;
+  activeRadioIndex = index;
+  const station = radioStations[index];
+  currentSong = -1; currentQueueId = null; playbackContext = 'radio';
+  shuffleMode = false; resetShuffleBag(); updateShuffleButton();
+  stopRadioHls(); audio.pause(); audio.removeAttribute('src'); audio.load();
+  radioNameDisplay.textContent = station.name;
+  document.querySelectorAll('.radio-station').forEach((button, i) => {
+    button.classList.toggle('active', i === index);
+    button.setAttribute('aria-pressed', String(i === index));
+  });
+  now.textContent = 'Radio in diretta · ' + station.name;
+  status.textContent = 'Connessione a ' + station.name + '…';
+  markRadioState(false, 'CONNESSIONE IN CORSO');
+  if (/\.m3u8(?:$|\?)/i.test(station.url) && window.Hls && Hls.isSupported()) {
+    radioHlsInstance = new Hls(); radioHlsInstance.loadSource(station.url); radioHlsInstance.attachMedia(audio);
+    radioHlsInstance.on(Hls.Events.MANIFEST_PARSED, () => audio.play().then(() => {
+      markRadioState(true, 'IN DIRETTA · WEB RADIO'); status.textContent = 'Stai ascoltando ' + station.name + '.';
+    }).catch(() => markRadioState(false, 'PREMI PLAY PER ASCOLTARE')));
+    radioHlsInstance.on(Hls.Events.ERROR, (_event, data) => { if (data && data.fatal) { markRadioState(false, 'STREAM NON DISPONIBILE'); status.textContent = 'Lo streaming di ' + station.name + ' non risponde. Prova un’altra stazione.'; } });
+  } else {
+    audio.src = station.url; audio.load();
+    audio.play().then(() => { markRadioState(true, 'IN DIRETTA · WEB RADIO'); status.textContent = 'Stai ascoltando ' + station.name + '.'; })
+      .catch(() => { markRadioState(false, 'PREMI PLAY PER ASCOLTARE'); status.textContent = 'Se la radio non parte da sola, premi Play nel lettore audio.'; });
+  }
+  renderPlaylist(); renderPersonalPlaylist();
+}
+document.querySelectorAll('.radio-station').forEach(button => button.addEventListener('click', () => playRadioStation(Number(button.dataset.radio))));
+radioVolume.addEventListener('input', () => { audio.volume = Number(radioVolume.value) / 100; radioVolumeLabel.textContent = radioVolume.value + '%'; });
+audio.volume = Number(radioVolume.value) / 100;
+document.getElementById('radio-stop').addEventListener('click', () => {
+  stopRadioHls(); audio.pause(); audio.removeAttribute('src'); audio.load(); activeRadioIndex = -1;
+  document.querySelectorAll('.radio-station').forEach(button => button.classList.remove('active'));
+  markRadioState(false, 'RADIO FERMATA'); radioNameDisplay.textContent = 'Scegli una radio'; now.textContent = 'Scegli un brano dalla lista'; status.textContent = 'Radio fermata. Puoi scegliere un brano MP3.';
+  playbackContext = 'songs'; currentSong = -1; currentQueueId = null; renderPlaylist(); renderPersonalPlaylist();
+});
+
+// Sincronizzazione display hi-fi: mostra il titolo del brano MP3 in riproduzione.
+audio.addEventListener('play', () => {
+  if (playbackContext !== 'radio') {
+    radioNameDisplay.textContent = now.textContent || 'Brano MP3';
+    markRadioState(true, 'IN RIPRODUZIONE · MP3');
+  }
+});
+audio.addEventListener('pause', () => {
+  if (playbackContext !== 'radio' && currentSong >= 0) {
+    markRadioState(false, 'MP3 IN PAUSA');
+  }
+});
+audio.addEventListener('ended', () => {
+  if (playbackContext !== 'radio' && currentSong >= 0) {
+    markRadioState(false, 'BRANO TERMINATO');
+  }
+});
+
+// Quando si riprende un MP3, libera l'eventuale decoder HLS della radio.
+const originalPlaySong = playSong;
+playSong = function(index) { stopRadioHls(); markRadioState(false, 'PRONTO ALL’ASCOLTO'); document.querySelectorAll('.radio-station').forEach(button => button.classList.remove('active')); originalPlaySong(index); };
+const originalPlayQueueItem = playQueueItem;
+playQueueItem = function(queueId) { stopRadioHls(); markRadioState(false, 'PRONTO ALL’ASCOLTO'); document.querySelectorAll('.radio-station').forEach(button => button.classList.remove('active')); originalPlayQueueItem(queueId); };
+
 loadSavedQueue();
 updateShuffleButton();
 setCategory("all");
 renderPersonalPlaylist();
 loadSongs();
+
+
+/* Equalizzatore animato indipendente: non modifica il percorso audio né le stazioni radio. */
+(function () {
+  const panel = document.getElementById('radio-equalizer');
+  const audioEl = document.getElementById('audio');
+  if (!panel || !audioEl) return;
+
+  const bars = Array.from(panel.querySelectorAll('span')).slice(0, 33);
+  let levels = bars.map(() => 0.08 + Math.random() * 0.18);
+  let targets = bars.map(() => 0.12 + Math.random() * 0.65);
+  let lastChange = 0;
+
+  function animateEqualizer(now) {
+    const playing = !audioEl.paused && !audioEl.ended;
+    if (playing) {
+      if (now - lastChange > 115) {
+        targets = bars.map((_, i) => {
+          const band = i / Math.max(1, bars.length - 1);
+          const broadWave = 0.18 + 0.42 * Math.abs(Math.sin(now / 290 + band * 5.2));
+          return Math.min(1, 0.08 + Math.random() * 0.48 + broadWave * (0.35 + Math.random() * 0.65));
+        });
+        lastChange = now;
+      }
+      levels = levels.map((level, i) => level + (targets[i] - level) * (0.22 + Math.random() * 0.18));
+    } else {
+      levels = levels.map(level => level + (0.055 - level) * 0.12);
+    }
+
+    bars.forEach((bar, i) => {
+      const height = Math.max(5, Math.min(100, levels[i] * 100));
+      bar.style.setProperty('--bar-height', height.toFixed(1) + '%');
+    });
+    window.requestAnimationFrame(animateEqualizer);
+  }
+
+  window.requestAnimationFrame(animateEqualizer);
+})();
+
 </script>
 
 </body></html>
